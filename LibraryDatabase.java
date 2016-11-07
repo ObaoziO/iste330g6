@@ -108,10 +108,4 @@ class LibraryDatabase {
       return true; // placeholder
    } //descTable
    
-   // some comment about the method functinality
-   // public PreparedStatement prepare() {
-//       PreparedStatement prepStmt = null;
-//       return prepStmt;
-//    } //prepare
-   
 } // end LibraryDatabase
