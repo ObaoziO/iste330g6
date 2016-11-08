@@ -14,7 +14,7 @@ class LibraryDatabase {
    private String user = "root";
    private String password = "pw";
    private String sql;
-   //private int numField;
+   private int numField;
    
    Connection conn = null;
    Statement stmnt = null;
@@ -25,19 +25,19 @@ class LibraryDatabase {
       // Load the driver
       String driver = "com.mysql.jdbc.Driver"; // MySQL database driver
       try {
-         Class.forName( driver );
+         Class.forName(driver);
          // System.out.println("MySQL database driver loaded");
       }
       catch(ClassNotFoundException cnfe) {
-         System.out.println( "Cannot find or load driver: " + driver );
+         System.out.println("Cannot find or load driver: " + driver);
       }
       
-      try{
-         conn = DriverManager.getConnection( uri, user, password );
+      try {
+         conn = DriverManager.getConnection(uri, user, password);
          return true;
       }
-      catch( SQLException sqle ) {
-         System.out.println( "Failed to connect to database: " + sqle );
+      catch(SQLException sqle) {
+         System.out.println("Failed to connect to database: " + sqle);
          sqle.printStackTrace();
          
          return false;
@@ -61,10 +61,10 @@ class LibraryDatabase {
    } // close
    
    // To obtain data from the database
-   public String[][] getData() {
+   public String[][] getData(String sql) {
       String[][] ary = null;
-      try{ //1
-         try {//2
+      try { // 1
+         try {
             connect();
          }
          catch (Exception e) {
@@ -82,15 +82,15 @@ class LibraryDatabase {
          rs.beforeFirst();
          int row = 0;
          
-         while (rs.next()){
+         while (rs.next()) {
             for (int i=1; i<=numCol; i++ ) { // Go through each field of rows of rs
                ary[ row ][ i-1 ] = rs.getString(i);
-            } // End for loop
+            }
             row++;
-         } // End while loop
-         
+         }
       } // End try 1
       catch(SQLException sqle) {
+         System.out.println("SQLException error: " + sqle);
          sqle.printStackTrace();
       }
       return ary; 
@@ -98,10 +98,16 @@ class LibraryDatabase {
    
    // For making changes to the database - FACULTY only
    public boolean setData(String sql) {
-      try{
-         sql = "SELECT * FROM faculty"; 
+      try { // 1
+         try {
+            connect();
+         }
+         catch (Exception e) {
+            System.out.println("Failed to set data: " + e);
+            e.printStackTrace();
+         }
          
-         System.out.println("Creating statement.."); 
+         System.out.println("Creating statement..."); 
          stmnt = conn.createStatement();
          
          if(stmnt.executeUpdate(sql) > 0){
@@ -110,25 +116,45 @@ class LibraryDatabase {
          else{
             return false; 
          }
-      }
-      catch(SQLException sqle){
-         System.out.println("SQLException error, SetData: " + sqle);
+      } // End try 1
+      catch(SQLException sqle) {
+         System.out.println("SQLException error: " + sqle);
          sqle.printStackTrace();
          return false;
       }
-   
    } // End getData
    
-   // Print out result for user
-   // What kind of the result for user? Wasn't sure about how we can use this method? 
-   // Which tables do we want to display info? 
-   public boolean descTable() {
-      if(connect()){
-         String sql = "SELECT * FROM ???"; 
-         System.out.println(sql); 
-         setData(sql);
+   // Display the information to user
+   public boolean descTable(String sql) {
+      try { // 1
+         try { 
+            connect();
+         }
+         catch (Exception e) {
+            System.out.println("Failed to get data: " + e);
+            e.printStackTrace();
+         }
+         
+         stmnt = conn.createStatement();
+         ResultSet rs = stmnt.executeQuery(sql);
+         ResultSetMetaData rsmd = rs.getMetaData();
+         
+         int numCols = rsmd.getColumnCount(); // Returns the number of columns
+         while (rs.next()) {
+            for (int i=1; i<=numField; i++) {
+               String name = rsmd.getColumnName(i); // Name of column i
+               String tblNam = rsmd.getTableName(i); // Gets the column's table name
+               DatabaseMetaData dbmd = conn.getMetaData();
+            } // End for 
+            numCols++;  
+         } // End while
+         return true;
+      } // End try 1
+      catch(SQLException sqle) {
+         System.out.println("SQLException error: " + sqle);
+         sqle.printStackTrace();
+         return false;
       }
-      return true; // placeholder
    } // End descTable
    
 } // End LibraryDatabase
