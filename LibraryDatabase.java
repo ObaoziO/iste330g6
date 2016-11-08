@@ -22,7 +22,7 @@ class LibraryDatabase {
    // Connect to the database and returns true or false 
    // depending on the success of the connection
    public boolean connect() { 
-      // load the driver
+      // Load the driver
       String driver = "com.mysql.jdbc.Driver"; // MySQL database driver
       try {
          Class.forName( driver );
@@ -42,7 +42,7 @@ class LibraryDatabase {
          
          return false;
       }
-   } // connect
+   } // End connect
     
    // Close the connection and returns true or false 
    // depending on the success of the close
@@ -89,12 +89,12 @@ class LibraryDatabase {
             row++;
          } // End while loop
          
-      } // End try statement
+      } // End try 1
       catch(SQLException sqle) {
          sqle.printStackTrace();
       }
       return ary; 
-   } // getData
+   } // End getData
    
    // For making changes to the database - FACULTY only
    public boolean setData(String sql) {
@@ -112,16 +112,16 @@ class LibraryDatabase {
          }
       }
       catch(SQLException sqle){
-         System.out.println("SQLException error:SetData");
+         System.out.println("SQLException error, SetData: " + sqle);
          sqle.printStackTrace();
          return false;
       }
    
-   } //getData
+   } // End getData
    
    // Print out result for user
-   //What kind of the result for user? Wasn't sure about how we can use this method? 
-   //Which tables do we want to display info? 
+   // What kind of the result for user? Wasn't sure about how we can use this method? 
+   // Which tables do we want to display info? 
    public boolean descTable() {
       if(connect()){
          String sql = "SELECT * FROM ???"; 
@@ -129,6 +129,6 @@ class LibraryDatabase {
          setData(sql);
       }
       return true; // placeholder
-   } //descTable
+   } // End descTable
    
-} // end LibraryDatabase
+} // End LibraryDatabase
