@@ -97,14 +97,37 @@ class LibraryDatabase {
    } // getData
    
    // For making changes to the database - FACULTY only
-   public boolean setData() {
-      
-      return true; // placeholder
+   public boolean setData(String sql) {
+      try{
+         sql = "SELECT * FROM faculty"; 
+         
+         System.out.println("Creating statement.."); 
+         stmnt = conn.createStatement();
+         
+         if(stmnt.executeUpdate(sql) > 0){
+            return true; 
+         }
+         else{
+            return false; 
+         }
+      }
+      catch(SQLException sqle){
+         System.out.println("SQLException error:SetData");
+         sqle.printStackTrace();
+         return false;
+      }
+   
    } //getData
    
    // Print out result for user
+   //What kind of the result for user? Wasn't sure about how we can use this method? 
+   //Which tables do we want to display info? 
    public boolean descTable() {
-      
+      if(connect()){
+         String sql = "SELECT * FROM ???"; 
+         System.out.println(sql); 
+         setData(sql);
+      }
       return true; // placeholder
    } //descTable
    
