@@ -8,6 +8,7 @@
 // Main class: executing program methods
 public class DigitalLibrary {
    public static void main(String[] args) {
-      
+      // Create new GUI object
+      new GUI();
    }
 }
