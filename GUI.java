@@ -9,39 +9,16 @@ import java.awt.*;
 import javax.swing.*;
 
 // **description of class here**
-public class GUI extends JFrame {
+public class GUI extends JFrame 
+{
    private JTextArea jtaTextArea; 
    private JMenu jmAbout, jmSignIn, jmHelp, jmSearch; 
    private JTextField jtfSearchBox; 
    private JScrollPane scrollPane; 
 
-   public GUI() {
+   public GUI() 
+   {
       display(); 
-      // // Title of the window
-   //       setTitle("Digital Library for Research Collaborations");
-   //       
-   //       // Title area
-   //       JMenuBar digitalLibraryJmb = new JMenuBar();
-   //       aboutJm = new JMenu("About");
-   //       signInJm = new JMenu("Sign In");
-   // //       helpJm = new JMenu("Help");
-   //       
-   //       // Add object to JMenuBar
-   //       digitalLibraryJmb.add(aboutJm);
-   //       digitalLibraryJmb.add(signInJm);
-   // //       digitalLibraryJmb.add(helpJm);
-   //       
-   //       // Add object to JFrame
-   //       add(digitalLibraryJmb);
-   //       
-   //       // ??
-   //       setJMenuBar(digitalLibraryJmb);
-   //       
-   //       // Set GUI window size, location, visibility, etc.
-   //       setSize(800,550);
-   //       setLocationRelativeTo(null);
-   //       setDefaultCloseOperation(EXIT_ON_CLOSE);
-   //       setVisible(true);
    }
    
    /*Display GUI*/ 

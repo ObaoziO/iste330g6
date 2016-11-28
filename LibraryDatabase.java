@@ -8,7 +8,8 @@
 import java.sql.*;
 // import java.util.*;
 
-class LibraryDatabase {
+class LibraryDatabase 
+{
    private String uri = "jdbc:mysql://localhost/travel?autoReconnect=true&useSSL=false";
    private String driver = "com.mysql.jdbc.Driver";
    private String user = "root";
@@ -21,22 +22,27 @@ class LibraryDatabase {
    
    // Connect to the database and returns true or false 
    // depending on the success of the connection
-   public boolean connect() { 
+   public boolean connect() 
+   { 
       // Load the driver
       String driver = "com.mysql.jdbc.Driver"; // MySQL database driver
-      try {
+      try 
+      {
          Class.forName(driver);
          // System.out.println("MySQL database driver loaded");
       }
-      catch(ClassNotFoundException cnfe) {
+      catch(ClassNotFoundException cnfe) 
+      {
          System.out.println("Cannot find or load driver: " + driver);
       }
       
-      try {
+      try 
+      {
          conn = DriverManager.getConnection(uri, user, password);
          return true;
       }
-      catch(SQLException sqle) {
+      catch(SQLException sqle) 
+      {
          System.out.println("Failed to connect to database: " + sqle);
          sqle.printStackTrace();
          
@@ -46,14 +52,18 @@ class LibraryDatabase {
     
    // Close the connection and returns true or false 
    // depending on the success of the close
-   public boolean close() {
-      try{
-         if (conn != null ) {
+   public boolean close() 
+   {
+      try
+      {
+         if (conn != null ) 
+         {
             conn.close(); // Close connection
          }
          return true;
       }
-      catch( SQLException sqle ) {
+      catch( SQLException sqle ) 
+      {
          System.out.println( "Failed to close connection or no database connected: " + sqle );
          sqle.printStackTrace();
          return false;
@@ -61,13 +71,17 @@ class LibraryDatabase {
    } // close
    
    // To obtain data from the database
-   public String[][] getData(String sql) {
+   public String[][] getData(String sql) 
+   {
       String[][] ary = null;
-      try { // 1
-         try {
+      try 
+      { // 1
+         try 
+         {
             connect();
          }
-         catch (Exception e) {
+         catch (Exception e) 
+         {
             e.printStackTrace();
          }
          
@@ -82,14 +96,17 @@ class LibraryDatabase {
          rs.beforeFirst();
          int row = 0;
          
-         while (rs.next()) {
-            for (int i=1; i<=numCol; i++ ) { // Go through each field of rows of rs
+         while (rs.next()) 
+         {
+            for (int i=1; i<=numCol; i++ ) 
+            { // Go through each field of rows of rs
                ary[ row ][ i-1 ] = rs.getString(i);
             }
             row++;
          }
       } // End try 1
-      catch(SQLException sqle) {
+      catch(SQLException sqle) 
+      {
          System.out.println("SQLException error: " + sqle);
          sqle.printStackTrace();
       }
@@ -97,12 +114,16 @@ class LibraryDatabase {
    } // End getData
    
    // For making changes to the database - FACULTY only
-   public boolean setData(String sql) {
-      try { // 1
-         try {
+   public boolean setData(String sql) 
+   {
+      try 
+      { // 1
+         try 
+         {
             connect();
          }
-         catch (Exception e) {
+         catch (Exception e) 
+         {
             System.out.println("Failed to set data: " + e);
             e.printStackTrace();
          }
@@ -110,14 +131,17 @@ class LibraryDatabase {
          System.out.println("Creating statement..."); 
          stmnt = conn.createStatement();
          
-         if(stmnt.executeUpdate(sql) > 0){
+         if(stmnt.executeUpdate(sql) > 0)
+         {
             return true; 
          }
-         else{
+         else
+         {
             return false; 
          }
       } // End try 1
-      catch(SQLException sqle) {
+      catch(SQLException sqle) 
+      {
          System.out.println("SQLException error: " + sqle);
          sqle.printStackTrace();
          return false;
@@ -125,12 +149,16 @@ class LibraryDatabase {
    } // End getData
    
    // Display the information to user
-   public boolean descTable(String sql) {
-      try { // 1
-         try { 
+   public boolean descTable(String sql) 
+   {
+      try 
+      { // 1
+         try 
+         { 
             connect();
          }
-         catch (Exception e) {
+         catch (Exception e) 
+         {
             System.out.println("Failed to get data: " + e);
             e.printStackTrace();
          }
@@ -140,8 +168,10 @@ class LibraryDatabase {
          ResultSetMetaData rsmd = rs.getMetaData();
          
          int numCols = rsmd.getColumnCount(); // Returns the number of columns
-         while (rs.next()) {
-            for (int i=1; i<=numField; i++) {
+         while (rs.next()) 
+         {
+            for (int i=1; i<=numField; i++) 
+            {
                String name = rsmd.getColumnName(i); // Name of column i
                String tblNam = rsmd.getTableName(i); // Gets the column's table name
                DatabaseMetaData dbmd = conn.getMetaData();
@@ -150,7 +180,8 @@ class LibraryDatabase {
          } // End while
          return true;
       } // End try 1
-      catch(SQLException sqle) {
+      catch(SQLException sqle) 
+      {
          System.out.println("SQLException error: " + sqle);
          sqle.printStackTrace();
          return false;
