@@ -18,31 +18,29 @@ public class GUI extends JFrame
 
    public GUI() 
    {
-      display(); 
+      displayGUI(); 
    }
    
    /*Display GUI*/ 
-   public void display()
+   public void displayGUI()
    {  
       JMenuBar topBar = new JMenuBar(); 
       setJMenuBar(topBar);
       
-      // Create JMenu object
+      // Create JMenu and other objects to add to the JMenuBar
       jmAbout = new JMenu("About"); 
-      topBar.add(jmAbout); 
-      
       jmSignIn = new JMenu("Sign In"); 
-      topBar.add(jmSignIn); 
-      
       jmHelp = new JMenu("Help"); 
-      topBar.add(jmHelp); 
+      jmSearch = new JMenu("Search");
       
       jtfSearchBox = new JTextField(20); 
       
       // Add object to JMenuBar
       topBar.add(jtfSearchBox); 
       topBar.add(Box.createHorizontalGlue());
-      jmSearch = new JMenu("Search");
+      topBar.add(jmAbout); 
+      topBar.add(jmSignIn); 
+      topBar.add(jmHelp); 
       topBar.add(jmSearch); 
          
       jtaTextArea = new JTextArea(25, 30); 
@@ -59,6 +57,12 @@ public class GUI extends JFrame
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setVisible(true);  
    
+   }
+   
+   // Test method for displaying server text onto the GUI
+   public void displayTextTest()
+   {
+      
    }
 
 }

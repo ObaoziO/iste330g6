@@ -11,6 +11,7 @@ public class DigitalLibrary
    public static void main(String [] args)
    {
       new GUI(); 
+      new LibraryDatabase();
    }
    
 }
