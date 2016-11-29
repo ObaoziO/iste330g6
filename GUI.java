@@ -36,11 +36,11 @@ public class GUI extends JFrame
       jtfSearchBox = new JTextField(20); 
       
       // Add object to JMenuBar
-      topBar.add(jtfSearchBox); 
       topBar.add(Box.createHorizontalGlue());
       topBar.add(jmAbout); 
       topBar.add(jmSignIn); 
       topBar.add(jmHelp); 
+      topBar.add(jtfSearchBox); 
       topBar.add(jmSearch); 
          
       jtaTextArea = new JTextArea(25, 30); 
