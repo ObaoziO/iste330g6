@@ -6,16 +6,18 @@
 **/
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 
 // **description of class here**
-public class GUI extends JFrame 
-{
+public class GUI extends JFrame{
    private JTextArea jtaTextArea; 
-   private JMenu jmAbout, jmSignIn, jmHelp, jmSearch; 
+   private JMenuItem jmAbout, jmSignIn, jmHelp, jmSearch; 
    private JTextField jtfSearchBox; 
    private JScrollPane scrollPane; 
-
+   String users = null;
+   String pass = null;
+   
    public GUI() 
    {
       displayGUI(); 
@@ -28,11 +30,46 @@ public class GUI extends JFrame
       setJMenuBar(topBar);
       
       // Create JMenu and other objects to add to the JMenuBar
-      jmAbout = new JMenu("About"); 
-      jmSignIn = new JMenu("Sign In"); 
-      jmHelp = new JMenu("Help"); 
-      jmSearch = new JMenu("Search");
-      
+      jmAbout = new JMenuItem("About");
+      jmAbout.addActionListener(new ActionListener(){
+         public void actionPerformed(ActionEvent ae){
+            jtaTextArea.setText("Welcome to Our program");
+         }
+      });
+      jmSignIn = new JMenuItem("Sign In");
+      jmSignIn.addActionListener(new ActionListener(){
+         public void actionPerformed(ActionEvent ae){
+            JPanel overal = new JPanel(new BorderLayout(5, 5));
+            
+            JPanel panel = new JPanel(new GridLayout(0,1,2,2));
+            panel.add(new JLabel("Username", SwingConstants.RIGHT));
+            panel.add(new JLabel("Password", SwingConstants.RIGHT));
+            overal.add(panel, BorderLayout.WEST);
+            
+            JPanel panel2 = new JPanel(new GridLayout(0,1,2,2));
+            JTextField username = new JTextField();
+            panel2.add(username);
+            JTextField password = new JTextField();
+            panel2.add(password);
+            overal.add(panel2, BorderLayout.CENTER);
+            
+            JOptionPane.showConfirmDialog(null,overal, "Sign-In", JOptionPane.OK_CANCEL_OPTION);
+            users = username.getText();
+            pass = password.getText(); 
+         }
+      });       
+      jmHelp = new JMenuItem("Help");
+      jmHelp.addActionListener(new ActionListener(){
+         public void actionPerformed(ActionEvent ae){
+            JOptionPane.showMessageDialog(null, "Do you need help", "Help", JOptionPane.PLAIN_MESSAGE);
+         }
+      });       
+      jmSearch = new JMenuItem("Search");
+      jmSearch.addActionListener(new ActionListener(){
+         public void actionPerformed(ActionEvent ae){
+            jtaTextArea.setText("Here are your search results");
+         }
+      });
       jtfSearchBox = new JTextField(20); 
       
       // Add object to JMenuBar
@@ -64,5 +101,4 @@ public class GUI extends JFrame
    {
       
    }
-
 }
