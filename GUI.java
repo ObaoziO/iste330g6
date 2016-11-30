@@ -71,7 +71,7 @@ public class GUI extends JFrame
                pass = password.getText();
                if(users.equals(userSQL)){
                   if(pass.equals(passSQL)){
-                     jtaTextArea.setText("You are signed in");
+                     jtaMainContent.setText("You are signed in");
                   }
                   else{
                      JOptionPane.showMessageDialog(null, "Incorrect Username and/or Password", "Error", JOptionPane.ERROR_MESSAGE);
