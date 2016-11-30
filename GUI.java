@@ -10,11 +10,12 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.text.*;
 import java.sql.*;
+import java.awt.Font;
 
 // **description of class here**
 public class GUI extends JFrame
 {
-   private JTextArea jtaTextArea; 
+   private JTextArea jtaDLFRC, jtaMainContent; 
    private JMenuItem jmiAbout, jmiSignIn, jmiHelp, jmiSearch; 
    private JTextField jtfSearchBox; 
    private JScrollPane scrollPane; 
@@ -29,6 +30,7 @@ public class GUI extends JFrame
    /*Display GUI*/ 
    public void displayGUI()
    {  
+      // Create JMenuBar object
       JMenuBar topBar = new JMenuBar(); 
       setJMenuBar(topBar);
       
@@ -37,7 +39,7 @@ public class GUI extends JFrame
       jmiAbout.addActionListener(
          new ActionListener(){
             public void actionPerformed(ActionEvent ae){
-               jtaTextArea.setText("Welcome to Our program");
+               jtaMainContent.setText("Welcome to Our program");
             }
          });
       jmiSignIn = new JMenuItem("Sign In");
@@ -74,7 +76,7 @@ public class GUI extends JFrame
       jmiSearch.addActionListener(
          new ActionListener(){
             public void actionPerformed(ActionEvent ae){
-               jtaTextArea.setText("Here are your search results");
+               jtaMainContent.setText("Here are your search results");
             }
          });
       jtfSearchBox = new JTextField(20); 
@@ -86,20 +88,25 @@ public class GUI extends JFrame
       topBar.add(jmiHelp); 
       topBar.add(jtfSearchBox); 
       topBar.add(jmiSearch); 
-         
-      // jtaTextArea = new JTextArea(25, 30); 
-      jtaTextArea = new JTextArea("Test: search working or not?"); 
-      scrollPane = new JScrollPane(jtaTextArea); 
+      
+      
+      /* CENTER */
+      String dlfrc = "Digital Library for Research Collaborations\n\n";
+      //dlfrc.setFont(dlfrc.getFont().deriveFont(18.0f));
+      // jtaMainContent = new JTextArea(25, 30); 
+      jtaMainContent = new JTextArea(dlfrc + "Test: search working or not?"); 
+      scrollPane = new JScrollPane(jtaMainContent); 
       
       //Set TextField Editable False
-      jtaTextArea.setEditable(false);
+      jtaMainContent.setEditable(false);
      
-      // Add object to JFrame
+      // Center: Add object to JFrame
       add(scrollPane, BorderLayout.CENTER);
+      
       
       // Set GUI property: title, window size, location, visibility, etc.
       setTitle("Digital Library for Research Collobrations"); 
-      setSize(600, 600); 
+      setSize(600, 400); 
       //pack();
       setLocationRelativeTo( null );
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
