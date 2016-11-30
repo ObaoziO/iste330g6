@@ -57,8 +57,22 @@ public class GUI extends JFrame{
                overal.add(panel2, BorderLayout.CENTER);
             
                JOptionPane.showConfirmDialog(null,overal, "Sign-In", JOptionPane.OK_CANCEL_OPTION);
+               String userSQL = "teste";
+               String passSQL = "test2";
+               
                users = username.getText();
-               pass = password.getText(); 
+               pass = password.getText();
+               if(users.equals(userSQL)){
+                  if(pass.equals(passSQL)){
+                     jtaTextArea.setText("You are signed in");
+                  }
+                  else{
+                     JOptionPane.showMessageDialog(null, "Incorrect Username and/or Password", "Error", JOptionPane.ERROR_MESSAGE);
+                  }
+               }
+               else{
+                  JOptionPane.showMessageDialog(null, "Incorrect Username and/or Password", "Error", JOptionPane.ERROR_MESSAGE);
+               } 
             }
          });       
       jmHelp = new JMenuItem("Help");
