@@ -10,7 +10,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.text.*;
 import java.sql.*;
-import java.awt.Font;
+//import java.awt.Font;
 
 // **description of class here**
 public class GUI extends JFrame
@@ -19,6 +19,7 @@ public class GUI extends JFrame
    private JMenuItem jmiAbout, jmiSignIn, jmiHelp, jmiSearch; 
    private JTextField jtfSearchBox; 
    private JScrollPane scrollPane; 
+   private JButton jbUpdate, jbDelete, jbInsert; 
    String users = null;
    String pass = null;
    
@@ -30,11 +31,13 @@ public class GUI extends JFrame
    /*Display GUI*/ 
    public void displayGUI()
    {  
-      // Create JMenuBar object
+      /************************** 
+       * Create JMenuBar object *
+       **************************/
       JMenuBar topBar = new JMenuBar(); 
       setJMenuBar(topBar);
       
-      // Create JMenuItem and other objects to add to the JMenuBar
+      // Create JMenu and other objects to add to the JMenuBar
       jmiAbout = new JMenuItem("About");
       jmiAbout.addActionListener(
          new ActionListener(){
@@ -90,7 +93,9 @@ public class GUI extends JFrame
       topBar.add(jmiSearch); 
       
       
-      /* CENTER */
+      /**********
+       * CENTER *
+       **********/
       String dlfrc = "Digital Library for Research Collaborations\n\n";
       //dlfrc.setFont(dlfrc.getFont().deriveFont(18.0f));
       // jtaMainContent = new JTextArea(25, 30); 
@@ -99,19 +104,37 @@ public class GUI extends JFrame
       
       //Set TextField Editable False
       jtaMainContent.setEditable(false);
-     
-      // Center: Add object to JFrame
+           
+      // Add object to JFrame
       add(scrollPane, BorderLayout.CENTER);
+   
+   
+      /*********
+       * SOUTH *
+       *********/
+      // Adding JButtons to JPanel called jpMain
+      JPanel jpMain = new JPanel(); 
+      
+      jbUpdate = new JButton("Update"); 
+      jpMain.add(jbUpdate); 
+      jbDelete = new JButton("Delete"); 
+      jpMain.add(jbDelete); 
+      jbInsert = new JButton("Insert"); 
+      jpMain.add(jbInsert); 
+      
+      //Adding jpMain to JFrame
+      add(jpMain, BorderLayout.SOUTH); 
       
       
-      // Set GUI property: title, window size, location, visibility, etc.
+      /********************************************************************
+       * Set GUI property: title, window size, location, visibility, etc. *
+       ********************************************************************/
       setTitle("Digital Library for Research Collobrations"); 
       setSize(600, 400); 
       //pack();
       setLocationRelativeTo( null );
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setVisible(true);  
-   
    }
    
    // Test method for displaying server text onto the GUI
@@ -119,10 +142,4 @@ public class GUI extends JFrame
    {
       
    }
-   
-   // Search the database to see if there are opportunities for collaboration using abstracts, keywords, etc.
-   public void search(String input) { //throws FileNotFoundException 
-      
-   }
-   
-} // GUI class
+}
