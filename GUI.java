@@ -130,10 +130,68 @@ public class GUI extends JFrame
       JPanel jpMain = new JPanel(); 
       
       jbUpdate = new JButton("Update"); 
+      jbUpdate.addActionListener(new ActionListener(){
+         public void actionPerformed(ActionEvent ae){
+            JPanel updates = new JPanel(new BorderLayout(5, 5));
+            
+            JPanel panelUp = new JPanel(new GridLayout(0,1,2,2));
+            panelUp.add(new JLabel("Old Text", SwingConstants.RIGHT));
+            panelUp.add(new JLabel("New Text", SwingConstants.RIGHT));
+            updates.add(panelUp, BorderLayout.WEST);
+            
+            JPanel panelUp2 = new JPanel(new GridLayout(0,1,2,2));
+            JTextField oldText = new JTextField();
+            oldText.setText("This is the old research texts");
+            panelUp2.add(oldText);
+            JTextField newText = new JTextField();
+            panelUp2.add(newText);
+            updates.add(panelUp2, BorderLayout.CENTER);
+            
+            JOptionPane.showConfirmDialog(null,updates, "Update", JOptionPane.OK_CANCEL_OPTION);
+            String updatedText = newText.getText();
+            System.out.println(updatedText);
+         }
+      });
       jpMain.add(jbUpdate); 
-      jbDelete = new JButton("Delete"); 
+      jbDelete = new JButton("Delete");
+      jbDelete.addActionListener(new ActionListener(){
+         public void actionPerformed(ActionEvent ae){
+            JPanel deletes = new JPanel(new BorderLayout(5, 5));
+            
+            JPanel panelDl = new JPanel(new GridLayout(0,1,2,2));
+            panelDl.add(new JLabel("Delete", SwingConstants.RIGHT));
+            deletes.add(panelDl, BorderLayout.WEST);
+            
+            JPanel panelDl2 = new JPanel(new GridLayout(0,1,2,2));
+            JTextField delText = new JTextField();
+            panelDl2.add(delText);
+            deletes.add(panelDl2, BorderLayout.CENTER);
+            
+            JOptionPane.showConfirmDialog(null,deletes, "Delete", JOptionPane.OK_CANCEL_OPTION);
+            String deletedText = delText.getText();
+            System.out.println(deletedText);
+         }
+      });
       jpMain.add(jbDelete); 
       jbInsert = new JButton("Insert"); 
+      jbInsert.addActionListener(new ActionListener(){
+         public void actionPerformed(ActionEvent ae){
+            JPanel inserts = new JPanel(new BorderLayout(5, 5));
+            
+            JPanel panelIn = new JPanel(new GridLayout(0,1,2,2));
+            panelIn.add(new JLabel("Add new Research", SwingConstants.RIGHT));
+            inserts.add(panelIn, BorderLayout.WEST);
+            
+            JPanel panelIn2 = new JPanel(new GridLayout(0,1,2,2));
+            JTextField insText = new JTextField();
+            panelIn2.add(insText);
+            inserts.add(panelIn2, BorderLayout.CENTER);
+            
+            JOptionPane.showConfirmDialog(null,inserts, "Delete", JOptionPane.OK_CANCEL_OPTION);
+            String insertedText = insText.getText();
+            System.out.println(insertedText);
+         }
+      });
       jpMain.add(jbInsert); 
       
       //Adding jpMain to JFrame
