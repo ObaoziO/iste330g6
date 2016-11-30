@@ -8,11 +8,15 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.text.*;
+import java.sql.*;
+//import java.awt.Font;
 
 // **description of class here**
-public class GUI extends JFrame{
-   private JTextArea jtaTextArea; 
-   private JMenuItem jmAbout, jmSignIn, jmHelp, jmSearch; 
+public class GUI extends JFrame
+{
+   private JTextArea jtaDLFRC, jtaMainContent; 
+   private JMenuItem jmiAbout, jmiSignIn, jmiHelp, jmiSearch; 
    private JTextField jtfSearchBox; 
    private JScrollPane scrollPane; 
    private JButton jbUpdate, jbDelete, jbInsert; 
@@ -27,19 +31,22 @@ public class GUI extends JFrame{
    /*Display GUI*/ 
    public void displayGUI()
    {  
+      /************************** 
+       * Create JMenuBar object *
+       **************************/
       JMenuBar topBar = new JMenuBar(); 
       setJMenuBar(topBar);
       
       // Create JMenu and other objects to add to the JMenuBar
-      jmAbout = new JMenuItem("About");
-      jmAbout.addActionListener(
+      jmiAbout = new JMenuItem("About");
+      jmiAbout.addActionListener(
          new ActionListener(){
             public void actionPerformed(ActionEvent ae){
-               jtaTextArea.setText("Welcome to Our program");
+               jtaMainContent.setText("Welcome to Our program");
             }
          });
-      jmSignIn = new JMenuItem("Sign In");
-      jmSignIn.addActionListener(
+      jmiSignIn = new JMenuItem("Sign In");
+      jmiSignIn.addActionListener(
          new ActionListener(){
             public void actionPerformed(ActionEvent ae){
                JPanel overal = new JPanel(new BorderLayout(5, 5));
@@ -75,23 +82,51 @@ public class GUI extends JFrame{
                } 
             }
          });       
-      jmHelp = new JMenuItem("Help");
-      jmHelp.addActionListener(
+      jmiHelp = new JMenuItem("Help");
+      jmiHelp.addActionListener(
          new ActionListener(){
             public void actionPerformed(ActionEvent ae){
                JOptionPane.showMessageDialog(null, "Do you need help", "Help", JOptionPane.PLAIN_MESSAGE);
             }
          });       
-      jmSearch = new JMenuItem("Search");
-      jmSearch.addActionListener(
+      jmiSearch = new JMenuItem("Search");
+      jmiSearch.addActionListener(
          new ActionListener(){
             public void actionPerformed(ActionEvent ae){
-               jtaTextArea.setText("Here are your search results");
+               jtaMainContent.setText("Here are your search results");
             }
          });
       jtfSearchBox = new JTextField(20); 
       
-      //adding Buttons to JPanel called jpMain
+      // Add object to JMenuBar
+      topBar.add(Box.createHorizontalGlue());
+      topBar.add(jmiAbout); 
+      topBar.add(jmiSignIn); 
+      topBar.add(jmiHelp); 
+      topBar.add(jtfSearchBox); 
+      topBar.add(jmiSearch); 
+      
+      
+      /**********
+       * CENTER *
+       **********/
+      String dlfrc = "Digital Library for Research Collaborations\n\n";
+      //dlfrc.setFont(dlfrc.getFont().deriveFont(18.0f));
+      // jtaMainContent = new JTextArea(25, 30); 
+      jtaMainContent = new JTextArea(dlfrc + "Test: search working or not?"); 
+      scrollPane = new JScrollPane(jtaMainContent); 
+      
+      //Set TextField Editable False
+      jtaMainContent.setEditable(false);
+           
+      // Add object to JFrame
+      add(scrollPane, BorderLayout.CENTER);
+   
+   
+      /*********
+       * SOUTH *
+       *********/
+      // Adding JButtons to JPanel called jpMain
       JPanel jpMain = new JPanel(); 
       
       jbUpdate = new JButton("Update"); 
@@ -101,31 +136,19 @@ public class GUI extends JFrame{
       jbInsert = new JButton("Insert"); 
       jpMain.add(jbInsert); 
       
-      // Add object to JMenuBar
-      topBar.add(Box.createHorizontalGlue());
-      topBar.add(jmAbout); 
-      topBar.add(jmSignIn); 
-      topBar.add(jmHelp); 
-      topBar.add(jtfSearchBox); 
-      topBar.add(jmSearch); 
-         
-      jtaTextArea = new JTextArea(25, 30); 
-      scrollPane = new JScrollPane(jtaTextArea); 
-     
-      // Add object to JFrame
-      add(scrollPane, BorderLayout.CENTER);
-      
       //Adding jpMain to JFrame
       add(jpMain, BorderLayout.SOUTH); 
       
-      // Set GUI property: title, window size, location, visibility, etc.
+      
+      /********************************************************************
+       * Set GUI property: title, window size, location, visibility, etc. *
+       ********************************************************************/
       setTitle("Digital Library for Research Collobrations"); 
-      setSize(600, 600); 
+      setSize(600, 400); 
       //pack();
       setLocationRelativeTo( null );
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setVisible(true);  
-   
    }
    
    // Test method for displaying server text onto the GUI
