@@ -5,14 +5,18 @@
 * Instructor: Michael Floeser
 **/
 
-import java.awt.*;
 import javax.swing.*;
+import javax.swing.text.*;
+import java.awt.event.*;
+import java.awt.*;
+import java.sql.*;
 
 // **description of class here**
-public class GUI extends JFrame 
+public class GUI extends JFrame implements ActionListener
 {
    private JTextArea jtaTextArea; 
-   private JMenu jmAbout, jmSignIn, jmHelp, jmSearch; 
+   private JMenu jmAbout, jmSignIn, jmHelp; // , jmSearch; 
+   private JButton jbSearch;
    private JTextField jtfSearchBox; 
    private JScrollPane scrollPane; 
 
@@ -31,9 +35,12 @@ public class GUI extends JFrame
       jmAbout = new JMenu("About"); 
       jmSignIn = new JMenu("Sign In"); 
       jmHelp = new JMenu("Help"); 
-      jmSearch = new JMenu("Search");
+      // jmSearch = new JMenu("Search");
+      jbSearch = new JButton("Search");
       
-      jtfSearchBox = new JTextField(20); 
+      
+      jtfSearchBox = new JTextField(15);
+      //jbSearch.addActionListener(this);
       
       // Add object to JMenuBar
       topBar.add(Box.createHorizontalGlue());
@@ -41,10 +48,15 @@ public class GUI extends JFrame
       topBar.add(jmSignIn); 
       topBar.add(jmHelp); 
       topBar.add(jtfSearchBox); 
-      topBar.add(jmSearch); 
+      topBar.add(jbSearch);
+      // topBar.add(jmSearch); 
          
-      jtaTextArea = new JTextArea(25, 30); 
+      // jtaTextArea = new JTextArea(25, 30); 
+      jtaTextArea = new JTextArea("Test: search working or not?"); 
       scrollPane = new JScrollPane(jtaTextArea); 
+      
+      //Set TextField Editable False
+      jtaTextArea.setEditable(false);
      
       // Add object to JFrame
       add(scrollPane, BorderLayout.CENTER);
@@ -64,5 +76,11 @@ public class GUI extends JFrame
    {
       
    }
+   
+   // Search the database to see if there are opportunities for collaboration using abstracts, keywords, etc.
+   public void search(String input) { //throws FileNotFoundException 
+      
+   }
+   
 
-}
+} // GUI class

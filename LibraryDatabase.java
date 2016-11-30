@@ -6,7 +6,6 @@
 **/
 
 import java.sql.*;
-// import java.util.*;
 
 class LibraryDatabase 
 {
@@ -19,6 +18,8 @@ class LibraryDatabase
    
    Connection conn = null;
    Statement stmnt = null;
+   
+   //GUI() dbGUI = new GUI();
    
    // Connect to the database and returns true or false 
    // depending on the success of the connection
