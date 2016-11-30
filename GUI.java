@@ -8,16 +8,14 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.text.*;
-import java.sql.*;
 
 // **description of class here**
-public class GUI extends JFrame
-{
+public class GUI extends JFrame{
    private JTextArea jtaTextArea; 
-   private JMenuItem jmiAbout, jmiSignIn, jmiHelp, jmiSearch; 
+   private JMenuItem jmAbout, jmSignIn, jmHelp, jmSearch; 
    private JTextField jtfSearchBox; 
    private JScrollPane scrollPane; 
+   private JButton jbUpdate, jbDelete, jbInsert; 
    String users = null;
    String pass = null;
    
@@ -32,16 +30,16 @@ public class GUI extends JFrame
       JMenuBar topBar = new JMenuBar(); 
       setJMenuBar(topBar);
       
-      // Create JMenuItem and other objects to add to the JMenuBar
-      jmiAbout = new JMenuItem("About");
-      jmiAbout.addActionListener(
+      // Create JMenu and other objects to add to the JMenuBar
+      jmAbout = new JMenuItem("About");
+      jmAbout.addActionListener(
          new ActionListener(){
             public void actionPerformed(ActionEvent ae){
                jtaTextArea.setText("Welcome to Our program");
             }
          });
-      jmiSignIn = new JMenuItem("Sign In");
-      jmiSignIn.addActionListener(
+      jmSignIn = new JMenuItem("Sign In");
+      jmSignIn.addActionListener(
          new ActionListener(){
             public void actionPerformed(ActionEvent ae){
                JPanel overal = new JPanel(new BorderLayout(5, 5));
@@ -63,15 +61,15 @@ public class GUI extends JFrame
                pass = password.getText(); 
             }
          });       
-      jmiHelp = new JMenuItem("Help");
-      jmiHelp.addActionListener(
+      jmHelp = new JMenuItem("Help");
+      jmHelp.addActionListener(
          new ActionListener(){
             public void actionPerformed(ActionEvent ae){
                JOptionPane.showMessageDialog(null, "Do you need help", "Help", JOptionPane.PLAIN_MESSAGE);
             }
          });       
-      jmiSearch = new JMenuItem("Search");
-      jmiSearch.addActionListener(
+      jmSearch = new JMenuItem("Search");
+      jmSearch.addActionListener(
          new ActionListener(){
             public void actionPerformed(ActionEvent ae){
                jtaTextArea.setText("Here are your search results");
@@ -79,23 +77,32 @@ public class GUI extends JFrame
          });
       jtfSearchBox = new JTextField(20); 
       
+      //adding Buttons to JPanel called jpMain
+      JPanel jpMain = new JPanel(); 
+      
+      jbUpdate = new JButton("Update"); 
+      jpMain.add(jbUpdate); 
+      jbDelete = new JButton("Delete"); 
+      jpMain.add(jbDelete); 
+      jbInsert = new JButton("Insert"); 
+      jpMain.add(jbInsert); 
+      
       // Add object to JMenuBar
       topBar.add(Box.createHorizontalGlue());
-      topBar.add(jmiAbout); 
-      topBar.add(jmiSignIn); 
-      topBar.add(jmiHelp); 
+      topBar.add(jmAbout); 
+      topBar.add(jmSignIn); 
+      topBar.add(jmHelp); 
       topBar.add(jtfSearchBox); 
-      topBar.add(jmiSearch); 
+      topBar.add(jmSearch); 
          
-      // jtaTextArea = new JTextArea(25, 30); 
-      jtaTextArea = new JTextArea("Test: search working or not?"); 
+      jtaTextArea = new JTextArea(25, 30); 
       scrollPane = new JScrollPane(jtaTextArea); 
-      
-      //Set TextField Editable False
-      jtaTextArea.setEditable(false);
      
       // Add object to JFrame
       add(scrollPane, BorderLayout.CENTER);
+      
+      //Adding jpMain to JFrame
+      add(jpMain, BorderLayout.SOUTH); 
       
       // Set GUI property: title, window size, location, visibility, etc.
       setTitle("Digital Library for Research Collobrations"); 
@@ -112,10 +119,4 @@ public class GUI extends JFrame
    {
       
    }
-   
-   // Search the database to see if there are opportunities for collaboration using abstracts, keywords, etc.
-   public void search(String input) { //throws FileNotFoundException 
-      
-   }
-   
-} // GUI class
+}
