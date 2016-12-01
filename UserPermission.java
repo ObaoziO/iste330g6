@@ -22,22 +22,14 @@ public class UserPermission
       String test2 = null;
       for(int i = 0; i < data.length; i++) 
       {
-         test = data[i][2];
-         test2 = data[i][3];
+         test = data[i][3];
+         test2 = data[i][4];
          if(inEmail.equals(test2) && inPass.equals(test)) 
          {
-            email = inEmail;
-            pass = inPass;
-            fname = data[i][0];
-            lname = data[i][1];
-         }
-         else 
-         {
-            return false;
-         }
-         break;               
+            return true;
+         }               
       } // End for loop
-      return true;
+      return false;
    } // End login
    
 } // End UserPermission

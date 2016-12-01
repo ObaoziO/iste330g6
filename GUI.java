@@ -59,7 +59,7 @@ public class GUI extends JFrame
                JPanel panel2 = new JPanel(new GridLayout(0,1,2,2));
                JTextField username = new JTextField();
                panel2.add(username);
-               JTextField password = new JTextField();
+               JPasswordField password = new JPasswordField();
                panel2.add(password);
                overal.add(panel2, BorderLayout.CENTER);
             
@@ -69,13 +69,18 @@ public class GUI extends JFrame
                
                users = username.getText();
                pass = password.getText();
-               if(users.equals(userSQL)){
-                  if(pass.equals(passSQL)){
-                     jtaMainContent.setText("You are signed in");
-                  }
-                  else{
-                     JOptionPane.showMessageDialog(null, "Incorrect Username and/or Password", "Error", JOptionPane.ERROR_MESSAGE);
-                  }
+               UserPermission userPerm = new UserPermission();
+               boolean check = false;
+               check = userPerm.login(users, pass);
+               
+               if(check == true){
+                  // if(pass.equals(passSQL)){
+//                      jtaMainContent.setText("You are signed in");
+//                   }
+//                   else{
+//                      JOptionPane.showMessageDialog(null, "Incorrect Username and/or Password", "Error", JOptionPane.ERROR_MESSAGE);
+//                   }
+                  jtaMainContent.setText("You are signed in");
                }
                else{
                   JOptionPane.showMessageDialog(null, "Incorrect Username and/or Password", "Error", JOptionPane.ERROR_MESSAGE);

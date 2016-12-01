@@ -9,10 +9,10 @@ import java.sql.*;
 
 class LibraryDatabase 
 {
-   private String uri = "jdbc:mysql://localhost/travel?autoReconnect=true&useSSL=false";
+   private String uri = "jdbc:mysql://localhost/FacResearchDB?autoReconnect=true&useSSL=false";
    private String driver = "com.mysql.jdbc.Driver";
    private String user = "root";
-   private String password = "pw";
+   private String password = "maple";
    private String sql;
    private int numField;
    
