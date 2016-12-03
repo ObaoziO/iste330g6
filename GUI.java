@@ -73,6 +73,10 @@ public class GUI extends JFrame
                      String fname = userPerm.signedIn();
                      jmiSignIn.setText("Hello, " + fname);                   
                      jmiSignIn.setEnabled(false);
+                      //I set these buttons' setVisible to be true
+                     jbUpdate.setVisible(true);
+                     jbDelete.setVisible(true); 
+                     jbInsert.setVisible(true); 
                   }
                   else{
                      JOptionPane.showMessageDialog(null, "Incorrect Username and/or Password", "Error", JOptionPane.ERROR_MESSAGE);
@@ -232,7 +236,8 @@ public class GUI extends JFrame
          }
       });
       jpMain.add(jbInsert); 
-      
+          //I set jpMain panel's setVisible to be false
+      jpMain.setVisible(false);
       //Adding jpMain to JFrame
       add(jpMain, BorderLayout.SOUTH); 
       
