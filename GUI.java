@@ -38,13 +38,6 @@ public class GUI extends JFrame
       setJMenuBar(topBar);
       
       // Create JMenu and other objects to add to the JMenuBar
-      jmiAbout = new JMenuItem("About");
-      jmiAbout.addActionListener(
-         new ActionListener(){
-            public void actionPerformed(ActionEvent ae){
-               jtaMainContent.setText("Welcome to Our program");
-            }
-         });
       jmiSignIn = new JMenuItem("Sign In");
       jmiSignIn.addActionListener(
          new ActionListener(){
@@ -62,8 +55,9 @@ public class GUI extends JFrame
                JPasswordField password = new JPasswordField();
                panel2.add(password);
                overal.add(panel2, BorderLayout.CENTER);
-            
-               JOptionPane.showConfirmDialog(null,overal, "Sign-In", JOptionPane.OK_CANCEL_OPTION);
+               overal.setPreferredSize(new Dimension(200,50));
+               
+               int n = JOptionPane.showConfirmDialog(null,overal, "Sign-In", JOptionPane.OK_CANCEL_OPTION);
                String userSQL = "teste";
                String passSQL = "test2";
                
@@ -73,18 +67,23 @@ public class GUI extends JFrame
                boolean check = false;
                check = userPerm.login(users, pass);
                
-               if(check == true){
-                  // if(pass.equals(passSQL)){
-//                      jtaMainContent.setText("You are signed in");
-//                   }
-//                   else{
-//                      JOptionPane.showMessageDialog(null, "Incorrect Username and/or Password", "Error", JOptionPane.ERROR_MESSAGE);
-//                   }
-                  jtaMainContent.setText("You are signed in");
+               if(n == JOptionPane.OK_OPTION){
+                  if(check == true){
+                     String fname = userPerm.signedIn();
+                     jmiSignIn.setText("Hello, " + fname);                   
+                     jmiSignIn.setEnabled(false);
+                  }
+                  else{
+                     JOptionPane.showMessageDialog(null, "Incorrect Username and/or Password", "Error", JOptionPane.ERROR_MESSAGE);
+                  }
                }
-               else{
-                  JOptionPane.showMessageDialog(null, "Incorrect Username and/or Password", "Error", JOptionPane.ERROR_MESSAGE);
-               } 
+            }
+         });
+      jmiAbout = new JMenuItem("About");
+      jmiAbout.addActionListener(
+         new ActionListener(){
+            public void actionPerformed(ActionEvent ae){
+               jtaMainContent.setText("Welcome to Our program");
             }
          });       
       jmiHelp = new JMenuItem("Help");
@@ -104,9 +103,9 @@ public class GUI extends JFrame
       jtfSearchBox = new JTextField(20); 
       
       // Add object to JMenuBar
-      topBar.add(Box.createHorizontalGlue());
+      topBar.add(Box.createHorizontalGlue());       
+      topBar.add(jmiSignIn);
       topBar.add(jmiAbout); 
-      topBar.add(jmiSignIn); 
       topBar.add(jmiHelp); 
       topBar.add(jtfSearchBox); 
       topBar.add(jmiSearch); 
