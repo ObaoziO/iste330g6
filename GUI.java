@@ -90,7 +90,23 @@ public class GUI extends JFrame
       jmiHelp.addActionListener(
          new ActionListener(){
             public void actionPerformed(ActionEvent ae){
-               JOptionPane.showMessageDialog(null, "Do you need help", "Help", JOptionPane.PLAIN_MESSAGE);
+               JPanel helpPane = new JPanel(new BorderLayout(5, 5));
+               String stepsSignIn = "<html><b>Sign In</b><br>1) Click on 'Sign In' menu item on the menu bar. <br>" 
+                  + "2) Enter email in the username field and password in the password field. <br>"
+                  + "3) If everything was entered properly, you should be signed in.<br>If not, an "
+                  + "error message will appear and you have to repeat step 1 again.</html>";
+               String stepsSearch = "<html><b>Search</b><br>1) Click on the search field on the top right corner of the frame. <br>"
+                  + "2) Enter keywords or author's name into the field. <br>"
+                  + "3) Click 'Search' button right next to the field. <br>"
+                  + "4) Your results should appear.</html>";
+                 
+               JLabel jlSignInSteps = new JLabel(stepsSignIn);
+               JLabel jlSearchSteps = new JLabel(stepsSearch);
+               
+               helpPane.add(jlSignInSteps, BorderLayout.NORTH);
+               helpPane.add(jlSearchSteps, BorderLayout.SOUTH);
+               helpPane.setPreferredSize(new Dimension(600, 200));
+               JOptionPane.showMessageDialog(null, helpPane, "Help", JOptionPane.PLAIN_MESSAGE);
             }
          });       
       jmiSearch = new JMenuItem("Search");
