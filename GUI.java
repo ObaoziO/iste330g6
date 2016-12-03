@@ -23,6 +23,7 @@ public class GUI extends JFrame
    private JButton jbUpdate, jbDelete, jbInsert; 
    String users = null;
    String pass = null;
+   JPanel jpMain =  new JPanel();
    
    public GUI() 
    {
@@ -74,9 +75,7 @@ public class GUI extends JFrame
                      jmiSignIn.setText("Hello, " + fname);                   
                      jmiSignIn.setEnabled(false);
                       //I set these buttons' setVisible to be true
-                     jbUpdate.setVisible(true);
-                     jbDelete.setVisible(true); 
-                     jbInsert.setVisible(true); 
+                     jpMain.setVisible(true); 
                   }
                   else{
                      JOptionPane.showMessageDialog(null, "Incorrect Username and/or Password", "Error", JOptionPane.ERROR_MESSAGE);
@@ -170,7 +169,7 @@ public class GUI extends JFrame
        * SOUTH *
        *********/
       // Adding JButtons to JPanel called jpMain
-      JPanel jpMain = new JPanel(); 
+     // JPanel jpMain = new JPanel(); 
       
       jbUpdate = new JButton("Update"); 
       jbUpdate.addActionListener(new ActionListener(){
