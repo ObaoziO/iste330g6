@@ -18,7 +18,7 @@ class LibraryDatabase
    
    Connection conn = null;
    Statement stmnt = null;
-   
+   PreparedStatement pstmt = null;
    //GUI() dbGUI = new GUI();
    
    // Connect to the database and returns true or false 
@@ -113,7 +113,49 @@ class LibraryDatabase
       }
       return ary; 
    } // End getData
-   
+   // To obtain data from the database - PREPARED STATEMENT
+   public String[][] getData(String sql, String id) 
+   {
+      String[][] ary = null;
+      try 
+      { // 1
+         try 
+         {
+            connect();
+         }
+         catch (Exception e) 
+         {
+            e.printStackTrace();
+         }
+         
+         pstmt = conn.prepareStatement(sql);
+         pstmt.setString(1, id);
+         ResultSet rs = pstmt.executeQuery(); 
+         ResultSetMetaData rsmd = rs.getMetaData();
+         
+         rs.last(); // Get the number of the last row and put it into the array
+         int numRow = rs.getRow();
+         int numCol = rsmd.getColumnCount(); // Returns the number of columns
+         ary = new String[numRow][numCol]; 
+         rs.beforeFirst();
+         int row = 0;
+         
+         while (rs.next()) 
+         {
+            for (int i=1; i<=numCol; i++ ) 
+            { // Go through each field of rows of rs
+               ary[ row ][ i-1 ] = rs.getString(i);
+            }
+            row++;
+         }
+      } // End try 1
+      catch(SQLException sqle) 
+      {
+         System.out.println("SQLException error: " + sqle);
+         sqle.printStackTrace();
+      }
+      return ary; 
+   } // End getData
    // For making changes to the database - FACULTY only
    public boolean setData(String sql) 
    {

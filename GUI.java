@@ -10,6 +10,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.text.*;
 import java.sql.*;
+import java.util.*;
 //import java.awt.Font;
 
 // **description of class here**
@@ -113,7 +114,26 @@ public class GUI extends JFrame
       jmiSearch.addActionListener(
          new ActionListener(){
             public void actionPerformed(ActionEvent ae){
-               jtaMainContent.setText("Here are your search results");
+               String results = jtfSearchBox.getText();
+               if(results.equals("")){
+                  JOptionPane.showMessageDialog(null, "Please enter keyword(s) in the search field", "Search Error", JOptionPane.PLAIN_MESSAGE);   
+               }
+               else if(results != null){
+                  SearchResults sr = new SearchResults();
+                  ArrayList<String> array = new ArrayList<String>();
+                  array = sr.getResults(results);
+                  String test = array.get(0);
+                  if(test.equals("none")){
+                     jtaMainContent.setText("No Results Found!");
+                  }
+                  else{
+                     jtaMainContent.setText(array.get(1) + "\n");
+                     jtaMainContent.append(array.get(2) + "\n");
+                     jtaMainContent.append(array.get(3));
+                  }                  
+               }
+               
+               //jtaMainContent.setText("Here are your search results");
             }
          });
       jtfSearchBox = new JTextField(20); 
@@ -133,7 +153,7 @@ public class GUI extends JFrame
       String dlfrc = "Digital Library for Research Collaborations\n\n";
       //dlfrc.setFont(dlfrc.getFont().deriveFont(18.0f));
       // jtaMainContent = new JTextArea(25, 30); 
-      jtaMainContent = new JTextArea(dlfrc + "Test: search working or not?"); 
+      jtaMainContent = new JTextArea(dlfrc + "Test: search working or not?");
       scrollPane = new JScrollPane(jtaMainContent); 
       
       //Set TextField Editable False
@@ -141,7 +161,6 @@ public class GUI extends JFrame
            
       // Add object to JFrame
       add(scrollPane, BorderLayout.CENTER);
-   
    
       /*********
        * SOUTH *
