@@ -91,7 +91,7 @@ public class GUI extends JFrame
       jmiAbout.addActionListener(
          new ActionListener(){
             public void actionPerformed(ActionEvent ae){
-               jtaMainContent.setText("Welcome to Our program");
+               jtaMainContent.setText("Welcome to Our Digital Library");
             }
          });       
       jmiHelp = new JMenuItem("Help");
@@ -166,9 +166,11 @@ public class GUI extends JFrame
        * CENTER *
        **********/
       String dlfrc = "Digital Library for Research Collaborations\n\n";
+      Font tr = new Font("TimesRoman", Font.BOLD, 28);
       //dlfrc.setFont(dlfrc.getFont().deriveFont(18.0f));
       // jtaMainContent = new JTextArea(25, 30); 
       jtaMainContent = new JTextArea(dlfrc + "Test: search working or not?");
+      jtaMainContent.setFont(tr); 
       jtaMainContent.setLineWrap(true);
       jtaMainContent.setWrapStyleWord(true);
       scrollPane = new JScrollPane(jtaMainContent); 
@@ -340,7 +342,7 @@ public class GUI extends JFrame
       /********************************************************************
        * Set GUI property: title, window size, location, visibility, etc. *
        ********************************************************************/
-      setTitle("Digital Library for Research Collobrations"); 
+      setTitle("Digital Library for Research Collobrations (DLFRC)"); 
       setSize(600, 400); 
       //pack();
       setLocationRelativeTo( null );
