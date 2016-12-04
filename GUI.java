@@ -23,6 +23,7 @@ public class GUI extends JFrame
    private JButton jbUpdate, jbDelete, jbInsert; 
    String users = null;
    String pass = null;
+   String ids, titles, abstrs, citation, keywrd;
    boolean signedIn = false;
    JPanel jpMain =  new JPanel();
    
@@ -117,8 +118,7 @@ public class GUI extends JFrame
             }
          });       
       jmiSearch = new JMenuItem("Search");
-      jmiSearch.addActionListener(
-         new ActionListener(){
+      ActionListener action = new ActionListener(){
             public void actionPerformed(ActionEvent ae){
                String results = jtfSearchBox.getText();
                if(results.equals("")){
@@ -126,6 +126,7 @@ public class GUI extends JFrame
                }
                else if(results != null){
                   SearchResults sr = new SearchResults();
+                  keywrd = results;
                   ArrayList<String> array = new ArrayList<String>();
                   array = sr.getResults(results);
                   String test = array.get(0);
@@ -133,9 +134,13 @@ public class GUI extends JFrame
                      jtaMainContent.setText("No Results Found!");
                   }
                   else{
-                     jtaMainContent.setText(array.get(1) + "\n");
-                     jtaMainContent.append(array.get(2) + "\n");
-                     jtaMainContent.append(array.get(3));
+                     ids = array.get(0);
+                     titles = array.get(1);
+                     abstrs = array.get(2);
+                     citation = array.get(3);
+                     jtaMainContent.setText(titles + "\n");
+                     jtaMainContent.append(abstrs + "\n");
+                     jtaMainContent.append(citation);
                      jbUpdate.setEnabled(true);
                      jbDelete.setEnabled(true);
                   }                  
@@ -143,9 +148,11 @@ public class GUI extends JFrame
                
                //jtaMainContent.setText("Here are your search results");
             }
-         });
+         };
+
+      jmiSearch.addActionListener(action);
       jtfSearchBox = new JTextField(20); 
-      
+      jtfSearchBox.addActionListener(action);
       // Add object to JMenuBar
       topBar.add(Box.createHorizontalGlue());       
       topBar.add(jmiSignIn);
@@ -200,7 +207,7 @@ public class GUI extends JFrame
             panelIn2.add(inCitation);
             panelIn2.add(inKeyword);
             inserts.add(panelIn2, BorderLayout.CENTER);
-            inserts.setPreferredSize(new Dimension(300, 150));
+            inserts.setPreferredSize(new Dimension(500, 150));
             
             int n = JOptionPane.showConfirmDialog(null,inserts, "Add a Research", JOptionPane.OK_CANCEL_OPTION);
             String title = inTitle.getText();
@@ -231,25 +238,58 @@ public class GUI extends JFrame
       jpMain.add(jbInsert);
       jbUpdate = new JButton("Update research"); 
       jbUpdate.addActionListener(new ActionListener(){
-         public void actionPerformed(ActionEvent ae){
+         public void actionPerformed(ActionEvent ae){        
             JPanel updates = new JPanel(new BorderLayout(5, 5));
             
             JPanel panelUp = new JPanel(new GridLayout(0,1,2,2));
-            panelUp.add(new JLabel("Old Text", SwingConstants.RIGHT));
-            panelUp.add(new JLabel("New Text", SwingConstants.RIGHT));
+            panelUp.add(new JLabel("Title", SwingConstants.RIGHT));
+            panelUp.add(new JLabel("Abstract of Research", SwingConstants.RIGHT));
+            panelUp.add(new JLabel("Citation", SwingConstants.RIGHT));
+            panelUp.add(new JLabel("Keyword(s)", SwingConstants.RIGHT));
             updates.add(panelUp, BorderLayout.WEST);
-            
+
             JPanel panelUp2 = new JPanel(new GridLayout(0,1,2,2));
-            JTextField oldText = new JTextField();
-            oldText.setText("This is the old research texts");
-            panelUp2.add(oldText);
-            JTextField newText = new JTextField();
-            panelUp2.add(newText);
+            JTextField upTitle = new JTextField();
+            upTitle.setText(titles);
+            JTextField upAbstract = new JTextField();
+            upAbstract.setText(abstrs);
+            JTextField upCitation = new JTextField();
+            upCitation.setText(citation);
+            JTextField upKeyword = new JTextField();
+            upKeyword.setText(keywrd);
+            
+            panelUp2.add(upTitle);
+            panelUp2.add(upAbstract);
+            panelUp2.add(upCitation);
+            panelUp2.add(upKeyword);
+            
             updates.add(panelUp2, BorderLayout.CENTER);
+            updates.setPreferredSize(new Dimension(500, 150));
             
             int n = JOptionPane.showConfirmDialog(null,updates, "Update a research", JOptionPane.OK_CANCEL_OPTION);
-            String updatedText = newText.getText();
-            System.out.println(updatedText);
+            if(n == JOptionPane.OK_OPTION){
+               String title = upTitle.getText();
+               String abstr = upAbstract.getText();
+               String citations = upCitation.getText();
+               String keyword = upKeyword.getText();
+               if(title.equals("")){
+                  JOptionPane.showMessageDialog(null, "Please enter a valid title", "Error", JOptionPane.PLAIN_MESSAGE);
+               }
+               else{
+                  ResearchAUD raud = new ResearchAUD();
+                  boolean s = raud.updateResearch(ids, title, abstr, citations, keyword);
+                  if(s == true){
+                     JOptionPane.showMessageDialog(null, "Research was edited successfully", "Success!", JOptionPane.PLAIN_MESSAGE);
+                     jtaMainContent.setText(title);
+                     jtaMainContent.append(abstr);
+                     jtaMainContent.append(citations);
+                  }
+                  else{
+                     JOptionPane.showMessageDialog(null, "Research was not successfully edited", "Fail!", JOptionPane.PLAIN_MESSAGE);
+                  }
+
+               }
+            }
          }
       });
       jbUpdate.setEnabled(false);
@@ -296,7 +336,7 @@ public class GUI extends JFrame
       //Adding jpMain to JFrame
       add(jpMain, BorderLayout.SOUTH); 
       
-      
+            
       /********************************************************************
        * Set GUI property: title, window size, location, visibility, etc. *
        ********************************************************************/

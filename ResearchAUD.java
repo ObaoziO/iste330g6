@@ -10,9 +10,9 @@ import java.sql.*;
 // The codes for Research Adds, Updates, Deletes are found here
 public class ResearchAUD 
 {
-   static LibraryDatabase ldb = new LibraryDatabase();
-   static SearchResults sr = new SearchResults();
-   public static boolean addResearch(String title, String abstr, String citation, String keywords){
+   LibraryDatabase ldb = new LibraryDatabase();
+   SearchResults sr = new SearchResults();
+   public boolean addResearch(String title, String abstr, String citation, String keywords){
       boolean rc = false;
       String sql = "INSERT INTO papers VALUES(?,?,?,?)";     
       
@@ -31,7 +31,7 @@ public class ResearchAUD
       rc = ldb.setData(sql2, questions2);
       return rc;
    }
-   public static boolean deleteResearch(String title){
+   public boolean deleteResearch(String title){
       String sql = "DELETE FROM papers WHERE title=?";
       String sql2 = "DELETE FROM paper_keywords WHERE id=(SELECT id FROM papers WHERE title=?)";
       boolean rc = false;
@@ -42,11 +42,21 @@ public class ResearchAUD
       rc = ldb.setData(sql, array);
       return rc;     
    }
-   public static boolean updateResearch(String title, String abstr, String citation, String keywords){
-      return true;
-   }
-   public static void main(String[] args){
-      //addResearch("Butt", "Butt", "Butt", "Butt");
-      //deleteResearch("testing");
+   public boolean updateResearch(String id, String title, String abstr, String citation, String keywords){
+      String sql = "UPDATE papers SET title=?, abstract=?, citation=? WHERE id=?";
+      String sql2 = "UPDATE paper_keywords SET keyword=? WHERE id=?";
+      boolean rc = false;
+      ArrayList<String> array = new ArrayList<String>();
+      array.add(title);
+      array.add(abstr);
+      array.add(citation);
+      array.add(id);
+      
+      ArrayList<String> array2 = new ArrayList<String>();
+      array2.add(keywords);
+      array2.add(id);
+      rc = ldb.setData(sql, array);
+      rc = ldb.setData(sql2, array2);
+      return rc;
    }
 } // End ResearchAUD
