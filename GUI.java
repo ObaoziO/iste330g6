@@ -23,6 +23,7 @@ public class GUI extends JFrame
    private JButton jbUpdate, jbDelete, jbInsert; 
    String users = null;
    String pass = null;
+   boolean signedIn = false;
    JPanel jpMain =  new JPanel();
    
    public GUI() 
@@ -76,9 +77,11 @@ public class GUI extends JFrame
                      jmiSignIn.setEnabled(false);
                       //I set these buttons' setVisible to be true
                      jpMain.setVisible(true); 
+                     signedIn = true;
                   }
                   else{
                      JOptionPane.showMessageDialog(null, "Incorrect Username and/or Password", "Error", JOptionPane.ERROR_MESSAGE);
+                     signedIn = false;
                   }
                }
             }
@@ -133,6 +136,8 @@ public class GUI extends JFrame
                      jtaMainContent.setText(array.get(1) + "\n");
                      jtaMainContent.append(array.get(2) + "\n");
                      jtaMainContent.append(array.get(3));
+                     jbUpdate.setEnabled(true);
+                     jbDelete.setEnabled(true);
                   }                  
                }
                
@@ -157,6 +162,8 @@ public class GUI extends JFrame
       //dlfrc.setFont(dlfrc.getFont().deriveFont(18.0f));
       // jtaMainContent = new JTextArea(25, 30); 
       jtaMainContent = new JTextArea(dlfrc + "Test: search working or not?");
+      jtaMainContent.setLineWrap(true);
+      jtaMainContent.setWrapStyleWord(true);
       scrollPane = new JScrollPane(jtaMainContent); 
       
       //Set TextField Editable False
@@ -171,7 +178,58 @@ public class GUI extends JFrame
       // Adding JButtons to JPanel called jpMain
      // JPanel jpMain = new JPanel(); 
       
-      jbUpdate = new JButton("Update"); 
+      jbInsert = new JButton("Add a research"); 
+      jbInsert.addActionListener(new ActionListener(){
+         public void actionPerformed(ActionEvent ae){
+            JPanel inserts = new JPanel(new BorderLayout(5, 5));
+            
+            JPanel panelIn = new JPanel(new GridLayout(0,1,2,2));
+            panelIn.add(new JLabel("Title", SwingConstants.RIGHT));
+            panelIn.add(new JLabel("Abstract of Research", SwingConstants.RIGHT));
+            panelIn.add(new JLabel("Citation", SwingConstants.RIGHT));
+            panelIn.add(new JLabel("Keyword(s)", SwingConstants.RIGHT));
+            inserts.add(panelIn, BorderLayout.WEST);
+            
+            JPanel panelIn2 = new JPanel(new GridLayout(0,1,2,2));
+            JTextField inTitle = new JTextField();
+            JTextField inAbstract = new JTextField();
+            JTextField inCitation = new JTextField();
+            JTextField inKeyword = new JTextField();
+            panelIn2.add(inTitle);
+            panelIn2.add(inAbstract);
+            panelIn2.add(inCitation);
+            panelIn2.add(inKeyword);
+            inserts.add(panelIn2, BorderLayout.CENTER);
+            inserts.setPreferredSize(new Dimension(300, 150));
+            
+            int n = JOptionPane.showConfirmDialog(null,inserts, "Add a Research", JOptionPane.OK_CANCEL_OPTION);
+            String title = inTitle.getText();
+            String abstr = inAbstract.getText();
+            String citat = inCitation.getText();
+            String keyword = inKeyword.getText();
+            if(n == JOptionPane.OK_OPTION){
+               if(title.equals("")){
+                  System.out.println(title);
+                  JOptionPane.showMessageDialog(null, "Please enter a valid title","Error", JOptionPane.PLAIN_MESSAGE);
+               }
+               else if(keyword.equals("")){
+                  JOptionPane.showMessageDialog(null, "Please enter a keyword", "Error", JOptionPane.PLAIN_MESSAGE);
+               }
+               else{
+                  ResearchAUD raud = new ResearchAUD();
+                  boolean s = raud.addResearch(title, abstr, citat, keyword);
+                  if(s == true){
+                     JOptionPane.showMessageDialog(null, "Research was added successfully", "Success!", JOptionPane.PLAIN_MESSAGE);
+                  }
+                  else{
+                     JOptionPane.showMessageDialog(null, "Research was not successfully added", "Fail!", JOptionPane.PLAIN_MESSAGE);
+                  }
+               }
+            }
+         }
+      });
+      jpMain.add(jbInsert);
+      jbUpdate = new JButton("Update research"); 
       jbUpdate.addActionListener(new ActionListener(){
          public void actionPerformed(ActionEvent ae){
             JPanel updates = new JPanel(new BorderLayout(5, 5));
@@ -189,53 +247,51 @@ public class GUI extends JFrame
             panelUp2.add(newText);
             updates.add(panelUp2, BorderLayout.CENTER);
             
-            JOptionPane.showConfirmDialog(null,updates, "Update", JOptionPane.OK_CANCEL_OPTION);
+            int n = JOptionPane.showConfirmDialog(null,updates, "Update a research", JOptionPane.OK_CANCEL_OPTION);
             String updatedText = newText.getText();
             System.out.println(updatedText);
          }
       });
+      jbUpdate.setEnabled(false);
       jpMain.add(jbUpdate); 
-      jbDelete = new JButton("Delete");
+      jbDelete = new JButton("Delete a research");
       jbDelete.addActionListener(new ActionListener(){
          public void actionPerformed(ActionEvent ae){
             JPanel deletes = new JPanel(new BorderLayout(5, 5));
             
             JPanel panelDl = new JPanel(new GridLayout(0,1,2,2));
-            panelDl.add(new JLabel("Delete", SwingConstants.RIGHT));
+            panelDl.add(new JLabel("Title of Research", SwingConstants.RIGHT));
             deletes.add(panelDl, BorderLayout.WEST);
             
             JPanel panelDl2 = new JPanel(new GridLayout(0,1,2,2));
             JTextField delText = new JTextField();
             panelDl2.add(delText);
             deletes.add(panelDl2, BorderLayout.CENTER);
-            
-            JOptionPane.showConfirmDialog(null,deletes, "Delete", JOptionPane.OK_CANCEL_OPTION);
+            deletes.setPreferredSize(new Dimension(300, 50));
+            int n = JOptionPane.showConfirmDialog(null,deletes, "Delete a research", JOptionPane.OK_CANCEL_OPTION);
             String deletedText = delText.getText();
-            System.out.println(deletedText);
+            if(n == JOptionPane.OK_OPTION){
+               if(deletedText.equals("")){
+                  JOptionPane.showMessageDialog(null, "Please enter a valid title","Error", JOptionPane.PLAIN_MESSAGE);
+               }
+               else{
+                  ResearchAUD raud = new ResearchAUD();
+                  boolean s = raud.deleteResearch(deletedText);
+                  if(s == true){
+                     JOptionPane.showMessageDialog(null, "Research was deleted successfully", "Success!", JOptionPane.PLAIN_MESSAGE);
+                     jtaMainContent.setText("");
+                  }
+                  else{
+                     JOptionPane.showMessageDialog(null, "Research was not successfully deleted", "Fail!", JOptionPane.PLAIN_MESSAGE);
+                  }
+               }
+            }
          }
       });
+      jbDelete.setEnabled(false);
       jpMain.add(jbDelete); 
-      jbInsert = new JButton("Insert"); 
-      jbInsert.addActionListener(new ActionListener(){
-         public void actionPerformed(ActionEvent ae){
-            JPanel inserts = new JPanel(new BorderLayout(5, 5));
             
-            JPanel panelIn = new JPanel(new GridLayout(0,1,2,2));
-            panelIn.add(new JLabel("Add new Research", SwingConstants.RIGHT));
-            inserts.add(panelIn, BorderLayout.WEST);
-            
-            JPanel panelIn2 = new JPanel(new GridLayout(0,1,2,2));
-            JTextField insText = new JTextField();
-            panelIn2.add(insText);
-            inserts.add(panelIn2, BorderLayout.CENTER);
-            
-            JOptionPane.showConfirmDialog(null,inserts, "Delete", JOptionPane.OK_CANCEL_OPTION);
-            String insertedText = insText.getText();
-            System.out.println(insertedText);
-         }
-      });
-      jpMain.add(jbInsert); 
-          //I set jpMain panel's setVisible to be false
+      //I set jpMain panel's setVisible to be false
       jpMain.setVisible(false);
       //Adding jpMain to JFrame
       add(jpMain, BorderLayout.SOUTH); 

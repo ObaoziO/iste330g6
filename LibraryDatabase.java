@@ -6,6 +6,7 @@
 **/
 
 import java.sql.*;
+import java.util.*;
 
 class LibraryDatabase 
 {
@@ -114,7 +115,7 @@ class LibraryDatabase
       return ary; 
    } // End getData
    // To obtain data from the database - PREPARED STATEMENT
-   public String[][] getData(String sql, String id) 
+   public String[][] getData(String sql, ArrayList<String> questions) 
    {
       String[][] ary = null;
       try 
@@ -129,7 +130,7 @@ class LibraryDatabase
          }
          
          pstmt = conn.prepareStatement(sql);
-         pstmt.setString(1, id);
+         pstmt.setString(1, questions.get(0));
          ResultSet rs = pstmt.executeQuery(); 
          ResultSetMetaData rsmd = rs.getMetaData();
          
@@ -157,7 +158,7 @@ class LibraryDatabase
       return ary; 
    } // End getData
    // For making changes to the database - FACULTY only
-   public boolean setData(String sql) 
+   public boolean setData(String sql, ArrayList<String> questions) 
    {
       try 
       { // 1
@@ -170,11 +171,13 @@ class LibraryDatabase
             System.out.println("Failed to set data: " + e);
             e.printStackTrace();
          }
+          
+         pstmt = conn.prepareStatement(sql);
+         for(int i = 0; i < questions.size(); i++){
+            pstmt.setString(i+1, questions.get(i));
+         }
          
-         System.out.println("Creating statement..."); 
-         stmnt = conn.createStatement();
-         
-         if(stmnt.executeUpdate(sql) > 0)
+         if(pstmt.executeUpdate() > 0)
          {
             return true; 
          }
@@ -189,7 +192,7 @@ class LibraryDatabase
          sqle.printStackTrace();
          return false;
       }
-   } // End getData
+   } // End setData
    
    // Display the information to user
    public boolean descTable(String sql) 

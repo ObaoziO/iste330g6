@@ -11,6 +11,7 @@ public class SearchResults
 {
    LibraryDatabase ldb = new LibraryDatabase();
    String paperId = "";
+   String lastId = "";
    
    public void checkResults(String result){
       String[][] data = ldb.getData("SELECT * FROM paper_keywords");
@@ -30,7 +31,9 @@ public class SearchResults
          array.add("none");
       }
       else{
-         String[][] data = ldb.getData("SELECT * FROM papers WHERE id=?", paperId);       
+         ArrayList<String> questions = new ArrayList<String>();
+         questions.add(paperId);
+         String[][] data = ldb.getData("SELECT * FROM papers WHERE id=?", questions);       
          for(int i=0; i < data.length; i++){
             for(int j=0; j < data[i].length; j++){
                array.add(data[i][j]);
@@ -38,5 +41,12 @@ public class SearchResults
          }
       }
       return array;
+   }
+   public String getLastId(){
+      String[][] data = ldb.getData("SELECT * FROM papers");
+      for(int i=0; i < data.length; i++){
+         lastId = data[i][0];
+      }
+      return lastId;
    }
 } // End SearchResults
