@@ -17,7 +17,7 @@ import java.util.*;
 public class GUI extends JFrame
 {
    private JTextArea jtaDLFRC, jtaMainContent; 
-   private JMenuItem jmiAbout, jmiSignIn, jmiHelp, jmiSearch; 
+   private JMenuItem jmiAbout, jmiSignIn, jmiHelp, jmiSearch, jmiCollab; 
    private JTextField jtfSearchBox; 
    private JScrollPane scrollPane; 
    private JButton jbUpdate, jbDelete, jbInsert; 
@@ -138,15 +138,46 @@ public class GUI extends JFrame
                      titles = array.get(1);
                      abstrs = array.get(2);
                      citation = array.get(3);
-                     jtaMainContent.setText(titles + "\n");
-                     jtaMainContent.append(abstrs + "\n");
-                     jtaMainContent.append(citation);
+                     jtaMainContent.setText("Title: \n" + titles + "\n\n");
+                     jtaMainContent.append("Basic Summary: \n " + abstrs + "\n\n");
+                     jtaMainContent.append("Citations: \n" + citation);
                      jbUpdate.setEnabled(true);
                      jbDelete.setEnabled(true);
+                     jmiCollab = new JMenuItem("Join Collaboration");
+                     topBar.add(jmiCollab);
+                     getContentPane().revalidate();
+                     jmiCollab.addActionListener(
+                        new ActionListener(){
+                           public void actionPerformed(ActionEvent ae){
+                              JPanel collab = new JPanel(new BorderLayout(5, 5));
+                              
+                              JPanel panelCl0 = new JPanel(new GridLayout(1,1));
+                              panelCl0.add(new JLabel("Enter your email below to notify researcher", SwingConstants.CENTER));
+                              collab.add(panelCl0, BorderLayout.NORTH);
+                              
+                              JPanel panelCl = new JPanel(new GridLayout(0,1,2,2));
+                              panelCl.add(new JLabel("Email:", SwingConstants.RIGHT));
+                              collab.add(panelCl, BorderLayout.WEST);
+                              
+                              JPanel panelCl2 = new JPanel(new GridLayout(0,1,2,2));
+                              JTextField colText = new JTextField();
+                              panelCl2.add(colText);
+                              collab.add(panelCl2, BorderLayout.CENTER);
+                              collab.setPreferredSize(new Dimension(300, 25));
+                              int n = JOptionPane.showConfirmDialog(null,collab, "Join Collaboration", JOptionPane.OK_CANCEL_OPTION);
+                              String collabText = colText.getText();
+                              if(n == JOptionPane.OK_OPTION){
+                                 if(collabText.equals("")){
+                                    JOptionPane.showMessageDialog(null, "Please enter a valid email", "Error", JOptionPane.PLAIN_MESSAGE);
+                                 }
+                                 else{
+                                    JOptionPane.showMessageDialog(null, "Researcher notified", "Success!", JOptionPane.PLAIN_MESSAGE);
+                                 }
+                              }
+                           }
+                        });
                   }                  
                }
-               
-               //jtaMainContent.setText("Here are your search results");
             }
          };
 
@@ -166,7 +197,7 @@ public class GUI extends JFrame
        * CENTER *
        **********/
       String dlfrc = "Digital Library for Research Collaborations\n\n";
-      Font tr = new Font("TimesRoman", Font.BOLD, 28);
+      Font tr = new Font("TimesRoman", Font.BOLD, 20);
       //dlfrc.setFont(dlfrc.getFont().deriveFont(18.0f));
       // jtaMainContent = new JTextArea(25, 30); 
       jtaMainContent = new JTextArea(dlfrc + "Test: search working or not?");
@@ -216,6 +247,12 @@ public class GUI extends JFrame
             String abstr = inAbstract.getText();
             String citat = inCitation.getText();
             String keyword = inKeyword.getText();
+            
+            String titleC = title.replaceAll("[^a-zA-Z0-9 ]","");
+            String abstrC = abstr.replaceAll("[^a-zA-Z0-9 ]","");
+            String citatC = citat.replaceAll("[^a-zA-Z0-9 ]","");
+            String keywordC = keyword.replaceAll("[^a-zA-Z0-9]","");
+            System.out.println(titleC + abstrC);
             if(n == JOptionPane.OK_OPTION){
                if(title.equals("")){
                   System.out.println(title);
@@ -226,7 +263,7 @@ public class GUI extends JFrame
                }
                else{
                   ResearchAUD raud = new ResearchAUD();
-                  boolean s = raud.addResearch(title, abstr, citat, keyword);
+                  boolean s = raud.addResearch(titleC, abstrC, citatC, keywordC);
                   if(s == true){
                      JOptionPane.showMessageDialog(null, "Research was added successfully", "Success!", JOptionPane.PLAIN_MESSAGE);
                   }
@@ -343,7 +380,7 @@ public class GUI extends JFrame
        * Set GUI property: title, window size, location, visibility, etc. *
        ********************************************************************/
       setTitle("Digital Library for Research Collobrations (DLFRC)"); 
-      setSize(600, 400); 
+      setSize(660, 400); 
       //pack();
       setLocationRelativeTo( null );
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
