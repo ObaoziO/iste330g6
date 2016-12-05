@@ -34,7 +34,7 @@ public class GUI extends JFrame
       
    // String for Home page
    private String title = "<html><h1>Welcome to DLFRC!</h1></html>";
-   private String body = "The Digital Library for Research Collaborations (DLFRC) is a database system created for easier access to research collaborations.";
+   private String body = "The Digital Library for Research Collaborations (DLFRC) is a database system created for easier access to research collaborations. Department faculty regularly engage in research and publish their results. They are often looking to work with other faculty and students, but it is difficult to keep track of what each person is working on. The DLFRC database application will address this problem. DLFRC allow users to search through the database and quickly find possible opportunities for collaboration on the researches.";
       
    public GUI() 
    {
