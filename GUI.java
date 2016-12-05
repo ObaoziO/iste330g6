@@ -139,25 +139,22 @@ public class GUI extends JFrame
                   + "<p>3) </p>"
                   + "<p>4) </p></html>";
                
-               
-               // Construct JPanel
-               //JPanel jpHelp = new JPanel(new BorderLayout(5, 5));
+               // Create new JPanel
                JPanel jpHelp = new JPanel();
                
                // Set Help menu content string as JLabel then add to the JPanel
                JLabel jlContent = new JLabel(helpSteps);
                jpHelp.add(jlContent, BorderLayout.CENTER);
                
-               
+               // Construct JPanel properties
                jpHelp.setLayout(new GridBagLayout());
                jpHelp.setBorder(LineBorder.createBlackLineBorder());
-
+               
+               // Consctruct JScrollPane
                scrollPane = new JScrollPane(jpHelp, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                scrollPane.setPreferredSize(new Dimension(600, 200));
-            
                
                // Set JPanel dimension then add JPanel to JOptionPane
-               //jpHelp.setPreferredSize(new Dimension(600, 200));
                JOptionPane.showMessageDialog(null, scrollPane, "Help", JOptionPane.PLAIN_MESSAGE);
             }
          });       
