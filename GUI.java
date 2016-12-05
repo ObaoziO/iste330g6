@@ -33,7 +33,7 @@ public class GUI extends JFrame
    private SimpleAttributeSet setStyle;
       
    // String for Home page
-   private String title = "<html><h1>Welcome to DLFRC!</h1></html>";
+   private String title = "<html><h1>Digital Library for Research Collaborations</h1></html>";
    private String body = "The Digital Library for Research Collaborations (DLFRC) is a database system created for easier access to research collaborations. Department faculty regularly engage in research and publish their results. They are often looking to work with other faculty and students, but it is difficult to keep track of what each person is working on. The DLFRC database application will address this problem. DLFRC allow users to search through the database and quickly find possible opportunities for collaboration on the researches.";
       
    public GUI() 
@@ -51,6 +51,7 @@ public class GUI extends JFrame
       setJMenuBar(topBar);
       
       // Create JMenu and other objects to add to the JMenuBar
+      jmiCollab = new JButton("Collaborate");
       jmiSignIn = new JMenuItem("Sign In");
       jmiSignIn.addActionListener(
          new ActionListener(){
@@ -87,6 +88,9 @@ public class GUI extends JFrame
                      jmiSignIn.setEnabled(false);
                      jpMain.setVisible(true); //Set button visibility to true
                      signedIn = true;
+                     jbUpdate.setVisible(true);
+                     jbDelete.setVisible(true);
+                     jbInsert.setVisible(true);
                   }
                   else{
                      JOptionPane.showMessageDialog(null, "Incorrect Username and/or Password", "Error", JOptionPane.ERROR_MESSAGE);
@@ -99,8 +103,9 @@ public class GUI extends JFrame
       jmiAbout.addActionListener(
          new ActionListener(){
             public void actionPerformed(ActionEvent ae){
-               // jtaMainContent.setText("Welcome to Our Digital Library");
-               homeContent();
+               jtaMainContent.setText(body);
+               jmiCollab.setVisible(false);
+               jpMain.setVisible(false);
             }
          });       
       jmiHelp = new JMenuItem("Help");
@@ -158,10 +163,11 @@ public class GUI extends JFrame
                      jtaMainContent.setText("Title: \n" + titles + "\n\n");
                      jtaMainContent.append("Basic Summary: \n " + abstrs + "\n\n");
                      jtaMainContent.append("Citations: \n" + citation);
+                     jtaMainContent.setCaretPosition(0);
                      jbUpdate.setEnabled(true);
                      jbDelete.setEnabled(true);
                      
-                     jmiCollab = new JButton("Collaborate");
+                     
                      jmiCollab.addActionListener(
                         new ActionListener(){
                            public void actionPerformed(ActionEvent ae){
