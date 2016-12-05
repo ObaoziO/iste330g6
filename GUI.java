@@ -33,7 +33,7 @@ public class GUI extends JFrame
    private SimpleAttributeSet setStyle;
       
    // String for Home page
-   private String title = "<html><h1>Digital Library for Research Collaborations</h1></html>";
+   private String title = "<html><h1>Digital Library for Research Collaborations (DLFRC)</h1></html>";
    private String body = "The Digital Library for Research Collaborations (DLFRC) is a database system created for easier access to research collaborations. Department faculty regularly engage in research and publish their results. They are often looking to work with other faculty and students, but it is difficult to keep track of what each person is working on. The DLFRC database application will address this problem. DLFRC allow users to search through the database and quickly find possible opportunities for collaboration on the researches.";
       
    public GUI() 
@@ -112,23 +112,81 @@ public class GUI extends JFrame
       jmiHelp.addActionListener(
          new ActionListener(){
             public void actionPerformed(ActionEvent ae){
-               JPanel helpPane = new JPanel(new BorderLayout(5, 5));
-               String stepsSignIn = "<html><b>Sign In</b><br>1) Click on 'Sign In' menu item on the menu bar. <br>" 
-                  + "2) Enter email in the username field and password in the password field. <br>"
-                  + "3) If everything was entered properly, you should be signed in.<br>If not, an "
-                  + "error message will appear and you have to repeat step 1 again.</html>";
-               String stepsSearch = "<html><b>Search</b><br>1) Click on the search field on the top right corner of the frame. <br>"
-                  + "2) Enter keywords or author's name into the field. <br>"
-                  + "3) Click 'Search' button right next to the field. <br>"
-                  + "4) Your results should appear.</html>";
+               JPanel jpHelp = new JPanel(new BorderLayout(5, 5));
+            //    String stepsSignIn = "<html><b>Sign In</b><br>"
+//                   + "1) Click on 'Sign In' menu item on the menu bar. <br>" 
+//                   + "2) Enter email in the username field and password in the password field. <br>"
+//                   + "3) If everything was entered properly, you should be signed in.<br>If not, an "
+//                   + "error message will appear and you have to repeat step 1 again.</html>";
+//                String stepsSearch = "<html><b>Search</b><br>"
+//                   + "1) Click on the search field on the top right corner of the frame. <br>"
+//                   + "2) Enter keywords or author's name into the field. <br>"
+//                   + "3) Click 'Search' button right next to the field. <br>"
+//                   + "4) Your results should appear.</html>";
+//                String stepsAddReserach = "<html><b>Add Research</b><br>"
+//                   + "1) <br>"
+//                   + "2) <br>"
+//                   + "3) <br>"
+//                   + "4) </html>";
+//                String stepsDeleteReserach = "<html><b>Delete Research</b><br>"
+//                   + "1) <br>"
+//                   + "2) <br>"
+//                   + "3) <br>"
+//                   + "4) </html>";
+//                String stepsUpdateReserach = "<html><b>Update Research</b><br>"
+//                   + "1) <br>"
+//                   + "2) <br>"
+//                   + "3) <br>"
+//                   + "4) </html>";
+
+                 String helpSteps = "<html><h4>Sign In</h4>"
+                  + "<p>1) Click on 'Sign In' menu item on the menu bar.</p>" 
+                  + "<p>2) Enter email in the username field and password in the password field.</p>"
+                  + "<p>3) If everything was entered properly, you should be signed in. If not, an "
+                  + "error message will appear and you have to repeat step 1 again.</p>"
+                  + "<h4>Search</h4>"
+                  + "<p>1) Click on the search field on the top right corner of the frame.</p>"
+                  + "<p>2) Enter keywords or author's name into the field.</p>"
+                  + "<p>3) Click 'Search' button right next to the field.</p>"
+                  + "<p>4) Your results should appear."
+                  + "<h4>Add a research</h4>"
+                  + "<p>1) </p>"
+                  + "<p>2) </p>"
+                  + "<p>3) </p>"
+                  + "<p>4) </html>"
+                  + "<h4>Delete a research</h4>"
+                  + "<p>1) </p>"
+                  + "<p>2) </p>"
+                  + "<p>3) </p>"
+                  + "<p>4) </html>"
+                  + "<h4>Update a research</h4>"
+                  + "<p>1) </p>"
+                  + "<p>2) </p>"
+                  + "<p>3) </p>"
+                  + "<p>4) </html>";
+
+
                  
-               JLabel jlSignInSteps = new JLabel(stepsSignIn);
-               JLabel jlSearchSteps = new JLabel(stepsSearch);
+               // JLabel jlSignInSteps = new JLabel(stepsSignIn);
+//                JLabel jlSearchSteps = new JLabel(stepsSearch);
+//                JLabel jlAddResearchSteps = new JLabel(stepsAddReserach);
+//                JLabel jlDeleteResearchSteps = new JLabel(stepsDeleteReserach);
+//                JLabel jlUpdateResearchSteps = new JLabel(stepsUpdateReserach);
+
+               JLabel jlContent = new JLabel(helpSteps);
                
-               helpPane.add(jlSignInSteps, BorderLayout.NORTH);
-               helpPane.add(jlSearchSteps, BorderLayout.SOUTH);
-               helpPane.setPreferredSize(new Dimension(600, 200));
-               JOptionPane.showMessageDialog(null, helpPane, "Help", JOptionPane.PLAIN_MESSAGE);
+               // jpHelp.add(jlAddResearchSteps);
+//                jpHelp.add(jlDeleteResearchSteps);
+//                jpHelp.add(jlUpdateResearchSteps);
+               
+               // JPanel jpContainer = new JPanel();
+               jpHelp.add(jlContent, BorderLayout.CENTER);
+               
+               // jpHelp.add(jlSignInSteps, BorderLayout.NORTH);
+//                jpHelp.add(jlSearchSteps, BorderLayout.SOUTH);
+               
+               jpHelp.setPreferredSize(new Dimension(600, 200));
+               JOptionPane.showMessageDialog(null, jpHelp, "Help", JOptionPane.PLAIN_MESSAGE);
             }
          });       
       jmiSearch = new JMenuItem("Search");
