@@ -13,14 +13,13 @@ class LibraryDatabase
    private String uri = "jdbc:mysql://localhost/FacResearchDB?autoReconnect=true&useSSL=false";
    private String driver = "com.mysql.jdbc.Driver";
    private String user = "root";
-   private String password = "maple";
+   private String password = "JEANie361";
    private String sql;
    private int numField;
    
    Connection conn = null;
    Statement stmnt = null;
    PreparedStatement pstmt = null;
-   //GUI() dbGUI = new GUI();
    
    // Connect to the database and returns true or false 
    // depending on the success of the connection

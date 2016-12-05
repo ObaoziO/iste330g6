@@ -11,7 +11,7 @@ import javax.swing.*;
 import javax.swing.text.*;
 import java.sql.*;
 import java.util.*;
-//import java.awt.Font;
+import java.awt.Font;
 
 // **description of class here**
 public class GUI extends JFrame
@@ -21,12 +21,16 @@ public class GUI extends JFrame
    private JTextField jtfSearchBox; 
    private JScrollPane scrollPane; 
    private JButton jbUpdate, jbDelete, jbInsert; 
-   String users = null;
-   String pass = null;
-   String ids, titles, abstrs, citation, keywrd;
-   boolean signedIn = false;
-   JPanel jpMain =  new JPanel();
+   private String users = null;
+   private String pass = null;
+   private String ids, titles, abstrs, citation, keywrd;
+   private boolean signedIn = false;
+   private JPanel jpMain =  new JPanel();
    
+   // String for Home page
+   private String title = "<html><h1>Welcome to DLFRC!</h1></html>";
+   private String body = "The Digital Library for Research Collaborations (DLFRC) is a database system created for easier access to research collaborations.";
+      
    public GUI() 
    {
       displayGUI(); 
@@ -76,8 +80,7 @@ public class GUI extends JFrame
                      String fname = userPerm.signedIn();
                      jmiSignIn.setText("Hello, " + fname);                   
                      jmiSignIn.setEnabled(false);
-                      //I set these buttons' setVisible to be true
-                     jpMain.setVisible(true); 
+                     jpMain.setVisible(true); //Set button visibility to true
                      signedIn = true;
                   }
                   else{
@@ -87,11 +90,12 @@ public class GUI extends JFrame
                }
             }
          });
-      jmiAbout = new JMenuItem("About");
+      jmiAbout = new JMenuItem("Home");
       jmiAbout.addActionListener(
          new ActionListener(){
             public void actionPerformed(ActionEvent ae){
-               jtaMainContent.setText("Welcome to Our Digital Library");
+               // jtaMainContent.setText("Welcome to Our Digital Library");
+               homeContent();
             }
          });       
       jmiHelp = new JMenuItem("Help");
@@ -118,7 +122,8 @@ public class GUI extends JFrame
             }
          });       
       jmiSearch = new JMenuItem("Search");
-      ActionListener action = new ActionListener(){
+      ActionListener action = 
+         new ActionListener(){
             public void actionPerformed(ActionEvent ae){
                String results = jtfSearchBox.getText();
                if(results.equals("")){
@@ -180,38 +185,25 @@ public class GUI extends JFrame
                }
             }
          };
-
+   
       jmiSearch.addActionListener(action);
       jtfSearchBox = new JTextField(20); 
       jtfSearchBox.addActionListener(action);
       // Add object to JMenuBar
-      topBar.add(Box.createHorizontalGlue());       
+      topBar.add(Box.createHorizontalGlue()); 
+      topBar.add(jmiAbout);       
       topBar.add(jmiSignIn);
-      topBar.add(jmiAbout); 
       topBar.add(jmiHelp); 
       topBar.add(jtfSearchBox); 
       topBar.add(jmiSearch); 
       
       
-      /**********
-       * CENTER *
-       **********/
-      String dlfrc = "Digital Library for Research Collaborations\n\n";
-      Font tr = new Font("TimesRoman", Font.BOLD, 20);
-      //dlfrc.setFont(dlfrc.getFont().deriveFont(18.0f));
-      // jtaMainContent = new JTextArea(25, 30); 
-      jtaMainContent = new JTextArea(dlfrc + "Test: search working or not?");
-      jtaMainContent.setFont(tr); 
-      jtaMainContent.setLineWrap(true);
-      jtaMainContent.setWrapStyleWord(true);
-      scrollPane = new JScrollPane(jtaMainContent); 
+      /*************
+       * Home Page *
+       *************/
+      homeContent();
       
-      //Set TextField Editable False
-      jtaMainContent.setEditable(false);
-           
-      // Add object to JFrame
-      add(scrollPane, BorderLayout.CENTER);
-   
+          
       /*********
        * SOUTH *
        *********/
@@ -219,154 +211,157 @@ public class GUI extends JFrame
      // JPanel jpMain = new JPanel(); 
       
       jbInsert = new JButton("Add a research"); 
-      jbInsert.addActionListener(new ActionListener(){
-         public void actionPerformed(ActionEvent ae){
-            JPanel inserts = new JPanel(new BorderLayout(5, 5));
+      jbInsert.addActionListener(
+         new ActionListener(){
+            public void actionPerformed(ActionEvent ae){
+               JPanel inserts = new JPanel(new BorderLayout(5, 5));
             
-            JPanel panelIn = new JPanel(new GridLayout(0,1,2,2));
-            panelIn.add(new JLabel("Title", SwingConstants.RIGHT));
-            panelIn.add(new JLabel("Abstract of Research", SwingConstants.RIGHT));
-            panelIn.add(new JLabel("Citation", SwingConstants.RIGHT));
-            panelIn.add(new JLabel("Keyword(s)", SwingConstants.RIGHT));
-            inserts.add(panelIn, BorderLayout.WEST);
+               JPanel panelIn = new JPanel(new GridLayout(0,1,2,2));
+               panelIn.add(new JLabel("Title", SwingConstants.RIGHT));
+               panelIn.add(new JLabel("Abstract of Research", SwingConstants.RIGHT));
+               panelIn.add(new JLabel("Citation", SwingConstants.RIGHT));
+               panelIn.add(new JLabel("Keyword(s)", SwingConstants.RIGHT));
+               inserts.add(panelIn, BorderLayout.WEST);
             
-            JPanel panelIn2 = new JPanel(new GridLayout(0,1,2,2));
-            JTextField inTitle = new JTextField();
-            JTextField inAbstract = new JTextField();
-            JTextField inCitation = new JTextField();
-            JTextField inKeyword = new JTextField();
-            panelIn2.add(inTitle);
-            panelIn2.add(inAbstract);
-            panelIn2.add(inCitation);
-            panelIn2.add(inKeyword);
-            inserts.add(panelIn2, BorderLayout.CENTER);
-            inserts.setPreferredSize(new Dimension(500, 150));
+               JPanel panelIn2 = new JPanel(new GridLayout(0,1,2,2));
+               JTextField inTitle = new JTextField();
+               JTextField inAbstract = new JTextField();
+               JTextField inCitation = new JTextField();
+               JTextField inKeyword = new JTextField();
+               panelIn2.add(inTitle);
+               panelIn2.add(inAbstract);
+               panelIn2.add(inCitation);
+               panelIn2.add(inKeyword);
+               inserts.add(panelIn2, BorderLayout.CENTER);
+               inserts.setPreferredSize(new Dimension(500, 150));
             
-            int n = JOptionPane.showConfirmDialog(null,inserts, "Add a Research", JOptionPane.OK_CANCEL_OPTION);
-            String title = inTitle.getText();
-            String abstr = inAbstract.getText();
-            String citat = inCitation.getText();
-            String keyword = inKeyword.getText();
+               int n = JOptionPane.showConfirmDialog(null,inserts, "Add a Research", JOptionPane.OK_CANCEL_OPTION);
+               String title = inTitle.getText();
+               String abstr = inAbstract.getText();
+               String citat = inCitation.getText();
+               String keyword = inKeyword.getText();
             
-            String titleC = title.replaceAll("[^a-zA-Z0-9 ]","");
-            String abstrC = abstr.replaceAll("[^a-zA-Z0-9 ]","");
-            String citatC = citat.replaceAll("[^a-zA-Z0-9 ]","");
-            String keywordC = keyword.replaceAll("[^a-zA-Z0-9]","");
-            System.out.println(titleC + abstrC);
-            if(n == JOptionPane.OK_OPTION){
-               if(title.equals("")){
-                  System.out.println(title);
-                  JOptionPane.showMessageDialog(null, "Please enter a valid title","Error", JOptionPane.PLAIN_MESSAGE);
-               }
-               else if(keyword.equals("")){
-                  JOptionPane.showMessageDialog(null, "Please enter a keyword", "Error", JOptionPane.PLAIN_MESSAGE);
-               }
-               else{
-                  ResearchAUD raud = new ResearchAUD();
-                  boolean s = raud.addResearch(titleC, abstrC, citatC, keywordC);
-                  if(s == true){
-                     JOptionPane.showMessageDialog(null, "Research was added successfully", "Success!", JOptionPane.PLAIN_MESSAGE);
+               String titleC = title.replaceAll("[^a-zA-Z0-9 ]","");
+               String abstrC = abstr.replaceAll("[^a-zA-Z0-9 ]","");
+               String citatC = citat.replaceAll("[^a-zA-Z0-9 ]","");
+               String keywordC = keyword.replaceAll("[^a-zA-Z0-9]","");
+               System.out.println(titleC + abstrC);
+               if(n == JOptionPane.OK_OPTION){
+                  if(title.equals("")){
+                     System.out.println(title);
+                     JOptionPane.showMessageDialog(null, "Please enter a valid title","Error", JOptionPane.PLAIN_MESSAGE);
+                  }
+                  else if(keyword.equals("")){
+                     JOptionPane.showMessageDialog(null, "Please enter a keyword", "Error", JOptionPane.PLAIN_MESSAGE);
                   }
                   else{
-                     JOptionPane.showMessageDialog(null, "Research was not successfully added", "Fail!", JOptionPane.PLAIN_MESSAGE);
+                     ResearchAUD raud = new ResearchAUD();
+                     boolean s = raud.addResearch(titleC, abstrC, citatC, keywordC);
+                     if(s == true){
+                        JOptionPane.showMessageDialog(null, "Research was added successfully", "Success!", JOptionPane.PLAIN_MESSAGE);
+                     }
+                     else{
+                        JOptionPane.showMessageDialog(null, "Research was not successfully added", "Fail!", JOptionPane.PLAIN_MESSAGE);
+                     }
                   }
                }
             }
-         }
-      });
+         });
       jpMain.add(jbInsert);
       jbUpdate = new JButton("Update research"); 
-      jbUpdate.addActionListener(new ActionListener(){
-         public void actionPerformed(ActionEvent ae){        
-            JPanel updates = new JPanel(new BorderLayout(5, 5));
+      jbUpdate.addActionListener(
+         new ActionListener(){
+            public void actionPerformed(ActionEvent ae){        
+               JPanel updates = new JPanel(new BorderLayout(5, 5));
             
-            JPanel panelUp = new JPanel(new GridLayout(0,1,2,2));
-            panelUp.add(new JLabel("Title", SwingConstants.RIGHT));
-            panelUp.add(new JLabel("Abstract of Research", SwingConstants.RIGHT));
-            panelUp.add(new JLabel("Citation", SwingConstants.RIGHT));
-            panelUp.add(new JLabel("Keyword(s)", SwingConstants.RIGHT));
-            updates.add(panelUp, BorderLayout.WEST);
-
-            JPanel panelUp2 = new JPanel(new GridLayout(0,1,2,2));
-            JTextField upTitle = new JTextField();
-            upTitle.setText(titles);
-            JTextField upAbstract = new JTextField();
-            upAbstract.setText(abstrs);
-            JTextField upCitation = new JTextField();
-            upCitation.setText(citation);
-            JTextField upKeyword = new JTextField();
-            upKeyword.setText(keywrd);
+               JPanel panelUp = new JPanel(new GridLayout(0,1,2,2));
+               panelUp.add(new JLabel("Title", SwingConstants.RIGHT));
+               panelUp.add(new JLabel("Abstract of Research", SwingConstants.RIGHT));
+               panelUp.add(new JLabel("Citation", SwingConstants.RIGHT));
+               panelUp.add(new JLabel("Keyword(s)", SwingConstants.RIGHT));
+               updates.add(panelUp, BorderLayout.WEST);
             
-            panelUp2.add(upTitle);
-            panelUp2.add(upAbstract);
-            panelUp2.add(upCitation);
-            panelUp2.add(upKeyword);
+               JPanel panelUp2 = new JPanel(new GridLayout(0,1,2,2));
+               JTextField upTitle = new JTextField();
+               upTitle.setText(titles);
+               JTextField upAbstract = new JTextField();
+               upAbstract.setText(abstrs);
+               JTextField upCitation = new JTextField();
+               upCitation.setText(citation);
+               JTextField upKeyword = new JTextField();
+               upKeyword.setText(keywrd);
             
-            updates.add(panelUp2, BorderLayout.CENTER);
-            updates.setPreferredSize(new Dimension(500, 150));
+               panelUp2.add(upTitle);
+               panelUp2.add(upAbstract);
+               panelUp2.add(upCitation);
+               panelUp2.add(upKeyword);
             
-            int n = JOptionPane.showConfirmDialog(null,updates, "Update a research", JOptionPane.OK_CANCEL_OPTION);
-            if(n == JOptionPane.OK_OPTION){
-               String title = upTitle.getText();
-               String abstr = upAbstract.getText();
-               String citations = upCitation.getText();
-               String keyword = upKeyword.getText();
-               if(title.equals("")){
-                  JOptionPane.showMessageDialog(null, "Please enter a valid title", "Error", JOptionPane.PLAIN_MESSAGE);
-               }
-               else{
-                  ResearchAUD raud = new ResearchAUD();
-                  boolean s = raud.updateResearch(ids, title, abstr, citations, keyword);
-                  if(s == true){
-                     JOptionPane.showMessageDialog(null, "Research was edited successfully", "Success!", JOptionPane.PLAIN_MESSAGE);
-                     jtaMainContent.setText(title);
-                     jtaMainContent.append(abstr);
-                     jtaMainContent.append(citations);
+               updates.add(panelUp2, BorderLayout.CENTER);
+               updates.setPreferredSize(new Dimension(500, 150));
+            
+               int n = JOptionPane.showConfirmDialog(null,updates, "Update a research", JOptionPane.OK_CANCEL_OPTION);
+               if(n == JOptionPane.OK_OPTION){
+                  String title = upTitle.getText();
+                  String abstr = upAbstract.getText();
+                  String citations = upCitation.getText();
+                  String keyword = upKeyword.getText();
+                  if(title.equals("")){
+                     JOptionPane.showMessageDialog(null, "Please enter a valid title", "Error", JOptionPane.PLAIN_MESSAGE);
                   }
                   else{
-                     JOptionPane.showMessageDialog(null, "Research was not successfully edited", "Fail!", JOptionPane.PLAIN_MESSAGE);
+                     ResearchAUD raud = new ResearchAUD();
+                     boolean s = raud.updateResearch(ids, title, abstr, citations, keyword);
+                     if(s == true){
+                        JOptionPane.showMessageDialog(null, "Research was edited successfully", "Success!", JOptionPane.PLAIN_MESSAGE);
+                        jtaMainContent.setText(title);
+                        jtaMainContent.append(abstr);
+                        jtaMainContent.append(citations);
+                     }
+                     else{
+                        JOptionPane.showMessageDialog(null, "Research was not successfully edited", "Fail!", JOptionPane.PLAIN_MESSAGE);
+                     }
+                  
                   }
-
                }
             }
-         }
-      });
+         });
       jbUpdate.setEnabled(false);
       jpMain.add(jbUpdate); 
       jbDelete = new JButton("Delete a research");
-      jbDelete.addActionListener(new ActionListener(){
-         public void actionPerformed(ActionEvent ae){
-            JPanel deletes = new JPanel(new BorderLayout(5, 5));
+      jbDelete.addActionListener(
+         new ActionListener(){
+            public void actionPerformed(ActionEvent ae){
+               JPanel deletes = new JPanel(new BorderLayout(5, 5));
             
-            JPanel panelDl = new JPanel(new GridLayout(0,1,2,2));
-            panelDl.add(new JLabel("Title of Research", SwingConstants.RIGHT));
-            deletes.add(panelDl, BorderLayout.WEST);
+               JPanel panelDl = new JPanel(new GridLayout(0,1,2,2));
+               panelDl.add(new JLabel("Title of Research", SwingConstants.RIGHT));
+               deletes.add(panelDl, BorderLayout.WEST);
             
-            JPanel panelDl2 = new JPanel(new GridLayout(0,1,2,2));
-            JTextField delText = new JTextField();
-            panelDl2.add(delText);
-            deletes.add(panelDl2, BorderLayout.CENTER);
-            deletes.setPreferredSize(new Dimension(300, 50));
-            int n = JOptionPane.showConfirmDialog(null,deletes, "Delete a research", JOptionPane.OK_CANCEL_OPTION);
-            String deletedText = delText.getText();
-            if(n == JOptionPane.OK_OPTION){
-               if(deletedText.equals("")){
-                  JOptionPane.showMessageDialog(null, "Please enter a valid title","Error", JOptionPane.PLAIN_MESSAGE);
-               }
-               else{
-                  ResearchAUD raud = new ResearchAUD();
-                  boolean s = raud.deleteResearch(deletedText);
-                  if(s == true){
-                     JOptionPane.showMessageDialog(null, "Research was deleted successfully", "Success!", JOptionPane.PLAIN_MESSAGE);
-                     jtaMainContent.setText("");
+               JPanel panelDl2 = new JPanel(new GridLayout(0,1,2,2));
+               JTextField delText = new JTextField();
+               panelDl2.add(delText);
+               deletes.add(panelDl2, BorderLayout.CENTER);
+               deletes.setPreferredSize(new Dimension(300, 50));
+               int n = JOptionPane.showConfirmDialog(null,deletes, "Delete a research", JOptionPane.OK_CANCEL_OPTION);
+               String deletedText = delText.getText();
+               if(n == JOptionPane.OK_OPTION){
+                  if(deletedText.equals("")){
+                     JOptionPane.showMessageDialog(null, "Please enter a valid title","Error", JOptionPane.PLAIN_MESSAGE);
                   }
                   else{
-                     JOptionPane.showMessageDialog(null, "Research was not successfully deleted", "Fail!", JOptionPane.PLAIN_MESSAGE);
+                     ResearchAUD raud = new ResearchAUD();
+                     boolean s = raud.deleteResearch(deletedText);
+                     if(s == true){
+                        JOptionPane.showMessageDialog(null, "Research was deleted successfully", "Success!", JOptionPane.PLAIN_MESSAGE);
+                        jtaMainContent.setText("");
+                     }
+                     else{
+                        JOptionPane.showMessageDialog(null, "Research was not successfully deleted", "Fail!", JOptionPane.PLAIN_MESSAGE);
+                     }
                   }
                }
             }
-         }
-      });
+         });
       jbDelete.setEnabled(false);
       jpMain.add(jbDelete); 
             
@@ -385,11 +380,34 @@ public class GUI extends JFrame
       setLocationRelativeTo( null );
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setVisible(true);  
-   }
+   } //displayGUI
    
-   // Test method for displaying server text onto the GUI
-   public void displayTextTest()
+   // Display contents for the Home page, which is also the same for the About page.
+   public void homeContent()
    {
+      // Add text to JLabel and JTextArea
+      JLabel jlTitle = new JLabel(title, SwingConstants.CENTER);      
+      jtaMainContent = new JTextArea(body);
       
-   }
-}
+      // Set font properties for body string
+      Font timesBody = new Font("Arial", Font.BOLD, 15);
+      jtaMainContent.setFont(timesBody); 
+      
+      jtaMainContent.setLineWrap(true);
+      jtaMainContent.setWrapStyleWord(true);
+   
+      scrollPane = new JScrollPane(jtaMainContent); 
+      
+      // Set TextField Editable False
+      jtaMainContent.setEditable(false);
+      
+      // Set background color of JFrame
+      getContentPane().setBackground(Color.WHITE);
+      
+      // Add object to JFrame
+      add(jlTitle, BorderLayout.NORTH);
+      add(scrollPane, BorderLayout.CENTER);
+      
+   } //homeAndAboutText
+   
+} //GUI
