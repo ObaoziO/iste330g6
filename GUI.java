@@ -11,6 +11,9 @@ import javax.swing.*;
 import javax.swing.text.*;
 import java.sql.*;
 import java.util.*;
+import javax.swing.JTextPane;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 //import java.awt.Font;
 
 // **description of class here**
@@ -21,11 +24,13 @@ public class GUI extends JFrame
    private JTextField jtfSearchBox; 
    private JScrollPane scrollPane; 
    private JButton jbUpdate, jbDelete, jbInsert; 
+   private JTextPane jtpMainContent; 
    String users = null;
    String pass = null;
    String ids, titles, abstrs, citation, keywrd;
    boolean signedIn = false;
    JPanel jpMain =  new JPanel();
+   private SimpleAttributeSet setStyle;
    
    public GUI() 
    {
@@ -197,17 +202,32 @@ public class GUI extends JFrame
        * CENTER *
        **********/
       String dlfrc = "Digital Library for Research Collaborations\n\n";
-      Font tr = new Font("TimesRoman", Font.BOLD, 20);
+      jtpMainContent = new JTextPane(); 
+     // Font tr = new Font("TimesRoman", Font.BOLD, 20);
       //dlfrc.setFont(dlfrc.getFont().deriveFont(18.0f));
       // jtaMainContent = new JTextArea(25, 30); 
-      jtaMainContent = new JTextArea(dlfrc + "Test: search working or not?");
-      jtaMainContent.setFont(tr); 
-      jtaMainContent.setLineWrap(true);
-      jtaMainContent.setWrapStyleWord(true);
-      scrollPane = new JScrollPane(jtaMainContent); 
+     // jtaMainContent = new JTextArea(dlfrc + "Test: search working or not?");
+     // jtaMainContent.setFont(tr); 
+     // jtaMainContent.setLineWrap(true);
+     // jtaMainContent.setWrapStyleWord(true);
+      setStyle = new SimpleAttributeSet(); 
+      jtpMainContent.setCharacterAttributes(setStyle, true);
+      StyleConstants.setBold(setStyle, true);
+      StyleConstants.setFontSize(setStyle, 24);
+      StyleConstants.setForeground(setStyle, Color.red);
+      
+      try{
+         Document doc = jtpMainContent.getStyledDocument();
+         doc.insertString(doc.getLength(), dlfrc , setStyle);
+      //jtpMainContent.setText(dlfrc);
+      }
+      catch(BadLocationException ble){
+         ble.printStackTrace(); 
+      }
+     scrollPane = new JScrollPane(jtpMainContent); 
       
       //Set TextField Editable False
-      jtaMainContent.setEditable(false);
+     // jtaMainContent.setEditable(false);
            
       // Add object to JFrame
       add(scrollPane, BorderLayout.CENTER);
