@@ -20,10 +20,10 @@ import javax.swing.text.StyleConstants;
 public class GUI extends JFrame
 {
    private JTextArea jtaDLFRC, jtaMainContent; 
-   private JMenuItem jmiAbout, jmiSignIn, jmiHelp, jmiSearch, jmiCollab; 
+   private JMenuItem jmiAbout, jmiSignIn, jmiHelp, jmiSearch; 
    private JTextField jtfSearchBox; 
    private JScrollPane scrollPane; 
-   private JButton jbUpdate, jbDelete, jbInsert; 
+   private JButton jbUpdate, jbDelete, jbInsert, jmiCollab; 
    private String users = null;
    private String pass = null;
    private String ids, titles, abstrs, citation, keywrd;
@@ -142,6 +142,13 @@ public class GUI extends JFrame
                   String test = array.get(0);
                   if(test.equals("none")){
                      jtaMainContent.setText("No Results Found!");
+                     if(signedIn == false){
+                        jpMain.setVisible(false);
+                     }
+                     else{
+                        jpMain.setVisible(true);
+                        jmiCollab.setVisible(false);
+                     }
                   }
                   else{
                      ids = array.get(0);
@@ -153,22 +160,21 @@ public class GUI extends JFrame
                      jtaMainContent.append("Citations: \n" + citation);
                      jbUpdate.setEnabled(true);
                      jbDelete.setEnabled(true);
-                     jmiCollab = new JMenuItem("Join Collaboration");
-                     topBar.add(jmiCollab);
-                     getContentPane().revalidate();
+                     
+                     jmiCollab = new JButton("Collaborate");
                      jmiCollab.addActionListener(
                         new ActionListener(){
                            public void actionPerformed(ActionEvent ae){
                               JPanel collab = new JPanel(new BorderLayout(5, 5));
-                              
+                                 
                               JPanel panelCl0 = new JPanel(new GridLayout(1,1));
                               panelCl0.add(new JLabel("Enter your email below to notify researcher", SwingConstants.CENTER));
                               collab.add(panelCl0, BorderLayout.NORTH);
-                              
+                               
                               JPanel panelCl = new JPanel(new GridLayout(0,1,2,2));
                               panelCl.add(new JLabel("Email:", SwingConstants.RIGHT));
                               collab.add(panelCl, BorderLayout.WEST);
-                              
+                               
                               JPanel panelCl2 = new JPanel(new GridLayout(0,1,2,2));
                               JTextField colText = new JTextField();
                               panelCl2.add(colText);
@@ -186,6 +192,21 @@ public class GUI extends JFrame
                               }
                            }
                         });
+                     jpMain.add(jmiCollab);
+                     if(signedIn == false){  
+                        jpMain.setVisible(true);
+                        jbUpdate.setVisible(false);
+                        jbDelete.setVisible(false);
+                        jbInsert.setVisible(false);
+                     }
+                     else if(signedIn == true){
+                        jpMain.setVisible(true);
+                        jbUpdate.setVisible(true);
+                        jbDelete.setVisible(true);
+                        jmiCollab.setVisible(true);
+                        jbInsert.setVisible(true);
+                        jpMain.revalidate();
+                     }                                         
                   }                  
                }
             }
@@ -197,8 +218,8 @@ public class GUI extends JFrame
       
       // Add object to JMenuBar
       topBar.add(Box.createHorizontalGlue()); 
-      topBar.add(jmiAbout);       
       topBar.add(jmiSignIn);
+      topBar.add(jmiAbout);       
       topBar.add(jmiHelp); 
       topBar.add(jtfSearchBox); 
       topBar.add(jmiSearch); 
