@@ -14,7 +14,7 @@ import java.util.*;
 import javax.swing.JTextPane;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
-//import java.awt.Font;
+import javax.swing.border.LineBorder;
 
 // **description of class here**
 public class GUI extends JFrame
@@ -112,10 +112,6 @@ public class GUI extends JFrame
       jmiHelp.addActionListener(
          new ActionListener(){
             public void actionPerformed(ActionEvent ae){
-               
-               // Create new JPanel
-               JPanel jpHelp = new JPanel(new BorderLayout(5, 5));
-               
                // Create string for Help menu content
                String helpSteps = "<html><h4>Sign In</h4>"
                   + "<p>1) Click on 'Sign In' menu item on the menu bar.</p>" 
@@ -131,25 +127,38 @@ public class GUI extends JFrame
                   + "<p>1) </p>"
                   + "<p>2) </p>"
                   + "<p>3) </p>"
-                  + "<p>4) </html>"
+                  + "<p>4) </p>"
                   + "<h4>Delete a research</h4>"
                   + "<p>1) </p>"
                   + "<p>2) </p>"
                   + "<p>3) </p>"
-                  + "<p>4) </html>"
+                  + "<p>4) </p>"
                   + "<h4>Update a research</h4>"
                   + "<p>1) </p>"
                   + "<p>2) </p>"
                   + "<p>3) </p>"
-                  + "<p>4) </html>";
+                  + "<p>4) </p></html>";
+               
+               
+               // Construct JPanel
+               //JPanel jpHelp = new JPanel(new BorderLayout(5, 5));
+               JPanel jpHelp = new JPanel();
                
                // Set Help menu content string as JLabel then add to the JPanel
                JLabel jlContent = new JLabel(helpSteps);
                jpHelp.add(jlContent, BorderLayout.CENTER);
                
+               
+               jpHelp.setLayout(new GridBagLayout());
+               jpHelp.setBorder(LineBorder.createBlackLineBorder());
+
+               scrollPane = new JScrollPane(jpHelp, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+               scrollPane.setPreferredSize(new Dimension(600, 200));
+            
+               
                // Set JPanel dimension then add JPanel to JOptionPane
-               jpHelp.setPreferredSize(new Dimension(600, 200));
-               JOptionPane.showMessageDialog(null, jpHelp, "Help", JOptionPane.PLAIN_MESSAGE);
+               //jpHelp.setPreferredSize(new Dimension(600, 200));
+               JOptionPane.showMessageDialog(null, scrollPane, "Help", JOptionPane.PLAIN_MESSAGE);
             }
          });       
       jmiSearch = new JMenuItem("Search");
@@ -449,11 +458,9 @@ public class GUI extends JFrame
       
       jtaMainContent.setLineWrap(true);
       jtaMainContent.setWrapStyleWord(true);
+      jtaMainContent.setEditable(false); // Set TextField Editable False
    
-      scrollPane = new JScrollPane(jtaMainContent); 
-      
-      // Set TextField Editable False
-      jtaMainContent.setEditable(false);
+      scrollPane = new JScrollPane(jtaMainContent); // Set jtaMainConent to be scrollable
       
       // Set background color of JFrame
       getContentPane().setBackground(Color.WHITE);
