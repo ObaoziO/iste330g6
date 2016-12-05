@@ -112,34 +112,12 @@ public class GUI extends JFrame
       jmiHelp.addActionListener(
          new ActionListener(){
             public void actionPerformed(ActionEvent ae){
+               
+               // Create new JPanel
                JPanel jpHelp = new JPanel(new BorderLayout(5, 5));
-            //    String stepsSignIn = "<html><b>Sign In</b><br>"
-//                   + "1) Click on 'Sign In' menu item on the menu bar. <br>" 
-//                   + "2) Enter email in the username field and password in the password field. <br>"
-//                   + "3) If everything was entered properly, you should be signed in.<br>If not, an "
-//                   + "error message will appear and you have to repeat step 1 again.</html>";
-//                String stepsSearch = "<html><b>Search</b><br>"
-//                   + "1) Click on the search field on the top right corner of the frame. <br>"
-//                   + "2) Enter keywords or author's name into the field. <br>"
-//                   + "3) Click 'Search' button right next to the field. <br>"
-//                   + "4) Your results should appear.</html>";
-//                String stepsAddReserach = "<html><b>Add Research</b><br>"
-//                   + "1) <br>"
-//                   + "2) <br>"
-//                   + "3) <br>"
-//                   + "4) </html>";
-//                String stepsDeleteReserach = "<html><b>Delete Research</b><br>"
-//                   + "1) <br>"
-//                   + "2) <br>"
-//                   + "3) <br>"
-//                   + "4) </html>";
-//                String stepsUpdateReserach = "<html><b>Update Research</b><br>"
-//                   + "1) <br>"
-//                   + "2) <br>"
-//                   + "3) <br>"
-//                   + "4) </html>";
-
-                 String helpSteps = "<html><h4>Sign In</h4>"
+               
+               // Create string for Help menu content
+               String helpSteps = "<html><h4>Sign In</h4>"
                   + "<p>1) Click on 'Sign In' menu item on the menu bar.</p>" 
                   + "<p>2) Enter email in the username field and password in the password field.</p>"
                   + "<p>3) If everything was entered properly, you should be signed in. If not, an "
@@ -164,27 +142,12 @@ public class GUI extends JFrame
                   + "<p>2) </p>"
                   + "<p>3) </p>"
                   + "<p>4) </html>";
-
-
-                 
-               // JLabel jlSignInSteps = new JLabel(stepsSignIn);
-//                JLabel jlSearchSteps = new JLabel(stepsSearch);
-//                JLabel jlAddResearchSteps = new JLabel(stepsAddReserach);
-//                JLabel jlDeleteResearchSteps = new JLabel(stepsDeleteReserach);
-//                JLabel jlUpdateResearchSteps = new JLabel(stepsUpdateReserach);
-
+               
+               // Set Help menu content string as JLabel then add to the JPanel
                JLabel jlContent = new JLabel(helpSteps);
-               
-               // jpHelp.add(jlAddResearchSteps);
-//                jpHelp.add(jlDeleteResearchSteps);
-//                jpHelp.add(jlUpdateResearchSteps);
-               
-               // JPanel jpContainer = new JPanel();
                jpHelp.add(jlContent, BorderLayout.CENTER);
                
-               // jpHelp.add(jlSignInSteps, BorderLayout.NORTH);
-//                jpHelp.add(jlSearchSteps, BorderLayout.SOUTH);
-               
+               // Set JPanel dimension then add JPanel to JOptionPane
                jpHelp.setPreferredSize(new Dimension(600, 200));
                JOptionPane.showMessageDialog(null, jpHelp, "Help", JOptionPane.PLAIN_MESSAGE);
             }
