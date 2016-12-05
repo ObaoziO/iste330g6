@@ -11,7 +11,10 @@ import javax.swing.*;
 import javax.swing.text.*;
 import java.sql.*;
 import java.util.*;
-import java.awt.Font;
+import javax.swing.JTextPane;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+//import java.awt.Font;
 
 // **description of class here**
 public class GUI extends JFrame
@@ -26,7 +29,9 @@ public class GUI extends JFrame
    private String ids, titles, abstrs, citation, keywrd;
    private boolean signedIn = false;
    private JPanel jpMain =  new JPanel();
-   
+   private JTextPane jtpMainContent;
+   private SimpleAttributeSet setStyle;
+      
    // String for Home page
    private String title = "<html><h1>Welcome to DLFRC!</h1></html>";
    private String body = "The Digital Library for Research Collaborations (DLFRC) is a database system created for easier access to research collaborations.";
@@ -189,6 +194,7 @@ public class GUI extends JFrame
       jmiSearch.addActionListener(action);
       jtfSearchBox = new JTextField(20); 
       jtfSearchBox.addActionListener(action);
+      
       // Add object to JMenuBar
       topBar.add(Box.createHorizontalGlue()); 
       topBar.add(jmiAbout);       
@@ -203,7 +209,7 @@ public class GUI extends JFrame
        *************/
       homeContent();
       
-          
+      
       /*********
        * SOUTH *
        *********/
