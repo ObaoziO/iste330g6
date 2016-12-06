@@ -10,8 +10,8 @@ import java.sql.*;
 // The codes for Research Adds, Updates, Deletes are found here
 public class ResearchAUD 
 {
-   LibraryDatabase ldb = new LibraryDatabase();
-   SearchResults sr = new SearchResults();
+   private LibraryDatabase ldb = new LibraryDatabase();
+   private SearchResults sr = new SearchResults();
    public boolean addResearch(String title, String abstr, String citation, String keywords){
       boolean rc = false;
       String sql = "INSERT INTO papers VALUES(?,?,?,?)";     

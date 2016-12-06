@@ -9,7 +9,7 @@ import java.util.*;
 // The codes for Search Results are found here
 public class SearchResults 
 {
-   LibraryDatabase ldb = new LibraryDatabase();
+   private LibraryDatabase ldb = new LibraryDatabase();
    String paperId = "";
    String lastId = "";
    

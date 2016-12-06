@@ -387,33 +387,29 @@ public class GUI extends JFrame
          });
       jbUpdate.setEnabled(false);
       jpMain.add(jbUpdate); 
-      jbDelete = new JButton("Delete a research");
+      jbDelete = new JButton("Delete research");
       jbDelete.addActionListener(
          new ActionListener(){
             public void actionPerformed(ActionEvent ae){
                JPanel deletes = new JPanel(new BorderLayout(5, 5));
             
                JPanel panelDl = new JPanel(new GridLayout(0,1,2,2));
-               panelDl.add(new JLabel("Title of Research", SwingConstants.RIGHT));
-               deletes.add(panelDl, BorderLayout.WEST);
-            
-               JPanel panelDl2 = new JPanel(new GridLayout(0,1,2,2));
-               JTextField delText = new JTextField();
-               panelDl2.add(delText);
-               deletes.add(panelDl2, BorderLayout.CENTER);
+               panelDl.add(new JLabel("Are you sure you want to delete this research?", SwingConstants.RIGHT));
+               deletes.add(panelDl, BorderLayout.CENTER);
                deletes.setPreferredSize(new Dimension(300, 50));
-               int n = JOptionPane.showConfirmDialog(null,deletes, "Delete a research", JOptionPane.OK_CANCEL_OPTION);
-               String deletedText = delText.getText();
+               
+               int n = JOptionPane.showConfirmDialog(null,deletes, "Delete research", JOptionPane.OK_CANCEL_OPTION);
+               String deletedText = titles;
                if(n == JOptionPane.OK_OPTION){
                   if(deletedText.equals("")){
-                     JOptionPane.showMessageDialog(null, "Please enter a valid title","Error", JOptionPane.PLAIN_MESSAGE);
+                     JOptionPane.showMessageDialog(null, "Research doesn't exist","Error", JOptionPane.PLAIN_MESSAGE);
                   }
                   else{
                      ResearchAUD raud = new ResearchAUD();
                      boolean s = raud.deleteResearch(deletedText);
                      if(s == true){
                         JOptionPane.showMessageDialog(null, "Research was deleted successfully", "Success!", JOptionPane.PLAIN_MESSAGE);
-                        jtaMainContent.setText("");
+                        jtaMainContent.setText("No Results Found!");
                      }
                      else{
                         JOptionPane.showMessageDialog(null, "Research was not successfully deleted", "Fail!", JOptionPane.PLAIN_MESSAGE);
