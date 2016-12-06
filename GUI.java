@@ -251,11 +251,11 @@ public class GUI extends JFrame
       
       // Add object to JMenuBar
       topBar.add(Box.createHorizontalGlue()); 
-      topBar.add(jmiHome);    
-      topBar.add(jmiSignIn);   
+      topBar.add(jmiHome);
       topBar.add(jmiHelp); 
       topBar.add(jtfSearchBox); 
       topBar.add(jmiSearch); 
+      topBar.add(jmiSignIn);   
       
       
       /*************
