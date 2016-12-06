@@ -20,7 +20,7 @@ import javax.swing.border.LineBorder;
 public class GUI extends JFrame
 {
    private JTextArea jtaDLFRC, jtaMainContent; 
-   private JMenuItem jmiAbout, jmiSignIn, jmiHelp, jmiSearch; 
+   private JMenuItem jmiHome, jmiSignIn, jmiHelp, jmiSearch; 
    private JTextField jtfSearchBox; 
    private JScrollPane scrollPane; 
    private JButton jbUpdate, jbDelete, jbInsert, jmiCollab; 
@@ -99,8 +99,8 @@ public class GUI extends JFrame
                }
             }
          });
-      jmiAbout = new JMenuItem("Home");
-      jmiAbout.addActionListener(
+      jmiHome = new JMenuItem("Home");
+      jmiHome.addActionListener(
          new ActionListener(){
             public void actionPerformed(ActionEvent ae){
                jtaMainContent.setText(body);
@@ -251,8 +251,8 @@ public class GUI extends JFrame
       
       // Add object to JMenuBar
       topBar.add(Box.createHorizontalGlue()); 
-      topBar.add(jmiSignIn);
-      topBar.add(jmiAbout);       
+      topBar.add(jmiHome);    
+      topBar.add(jmiSignIn);   
       topBar.add(jmiHelp); 
       topBar.add(jtfSearchBox); 
       topBar.add(jmiSearch); 
@@ -438,7 +438,7 @@ public class GUI extends JFrame
       setVisible(true);  
    } //displayGUI
    
-   // Display contents for the Home page, which is also the same for the About page.
+   // Display contents for the Home page
    public void homeContent()
    {
       // Add text to JLabel and JTextArea
@@ -462,6 +462,6 @@ public class GUI extends JFrame
       add(jlTitle, BorderLayout.NORTH);
       add(scrollPane, BorderLayout.CENTER);
       
-   } //homeAndAboutText
+   } //homeContent
    
 } //GUI
