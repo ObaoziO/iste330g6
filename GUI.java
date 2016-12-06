@@ -110,21 +110,17 @@ public class GUI extends JFrame
                      JOptionPane.showMessageDialog(null, "Incorrect Username and/or Password", "Error", JOptionPane.ERROR_MESSAGE);
                      signedIn = false; //keep track if a user is logged in
                   }
-<<<<<<< Updated upstream
+
                }
             }
          });
-      jmiHome = new JMenuItem("Home");
-      jmiHome.addActionListener(
-=======
-               }//End of JOptionPane.OK
-            }//end of actionPerformed
-         });//End of SignIn actionListener SIGNED IN
+         
+ 
       //Create JMenuItem for Home
-      jmiAbout = new JMenuItem("Home");
+      jmiHome  = new JMenuItem("Home");
       //Add an actionlistener to Home
-      jmiAbout.addActionListener(
->>>>>>> Stashed changes
+      jmiHome.addActionListener(
+
          new ActionListener(){
             public void actionPerformed(ActionEvent ae){
                jtaMainContent.setText(body); //Set the JTextArea to the body string
@@ -508,15 +504,15 @@ public class GUI extends JFrame
       setVisible(true);  
    }//end of displayGUI
    
-<<<<<<< Updated upstream
+
    // Display contents for the Home page
-=======
+
    /**
       *Method to create home contents
       *@param none
       *@return none
    */
->>>>>>> Stashed changes
+
    public void homeContent()
    {
       // Add text to JLabel and JTextArea
@@ -540,10 +536,10 @@ public class GUI extends JFrame
       add(jlTitle, BorderLayout.NORTH);
       add(scrollPane, BorderLayout.CENTER);
       
-<<<<<<< Updated upstream
+
    } //homeContent
-=======
-   } //end homeAndAboutText
->>>>>>> Stashed changes
+
+  // } //end homeAndAboutText
+
    
 } //end GUI
