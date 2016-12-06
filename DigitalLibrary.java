@@ -5,7 +5,9 @@
  * Instructor: Michael Floeser
 **/
  
-// Main class: executing program methods
+/**
+   *DigitalLibrary is the main class that runs the whole program
+*/
 public class DigitalLibrary
 {
    public static void main(String [] args)
