@@ -249,7 +249,7 @@ public class GUI extends JFrame
                               JTextField colText = new JTextField();
                               panelCl2.add(colText);
                               collab.add(panelCl2, BorderLayout.CENTER);
-                              collab.setPreferredSize(new Dimension(300, 25));   //set preferred size for the JOptionPane
+                              collab.setPreferredSize(new Dimension(300, 50));   //set preferred size for the JOptionPane
                               //Create the JOptionPane to ask for potential collaborator
                               int n = JOptionPane.showConfirmDialog(null,collab, "Join Collaboration", JOptionPane.OK_CANCEL_OPTION);
                               String collabText = colText.getText(); //attach the text in the JTextField to string
@@ -262,8 +262,20 @@ public class GUI extends JFrame
                                  }
                                  //if JTextField is not empty
                                  else{
-                                    //JOptionPane for success
-                                    JOptionPane.showMessageDialog(null, "Researcher notified", "Success!", JOptionPane.PLAIN_MESSAGE);
+                                    //Using Regex to check if valid email
+                                    String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+                                    java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+                                    java.util.regex.Matcher m = p.matcher(collabText);
+                                    boolean test = m.matches();
+                                    
+                                    if(test == true){
+                                       //JOptionPane for success
+                                       JOptionPane.showMessageDialog(null, "Researcher notified", "Success!", JOptionPane.PLAIN_MESSAGE);
+                                    }
+                                    else{
+                                       //JOptionPane Error ask enter email
+                                       JOptionPane.showMessageDialog(null, "Please enter a valid email", "Error", JOptionPane.PLAIN_MESSAGE);
+                                    }                                                                        
                                  }
                               }
                            }//End of actionPerformed
