@@ -257,13 +257,13 @@ public class GUI extends JFrame
                               if(n == JOptionPane.OK_OPTION){
                                  //if JTextField is empty
                                  if(collabText.equals("")){
-                                    //JOptionPane Error ask for valid entry
-                                    JOptionPane.showMessageDialog(null, "Invalid entry, please try again.", "Error", JOptionPane.PLAIN_MESSAGE);
+                                    //JOptionPane Error ask enter email
+                                    JOptionPane.showMessageDialog(null, "Please enter a valid email", "Error", JOptionPane.PLAIN_MESSAGE);
                                  }
                                  //if JTextField is not empty
                                  else{
                                     //JOptionPane for success
-                                    JOptionPane.showMessageDialog(null, "Researcher notified.", "Success!", JOptionPane.PLAIN_MESSAGE);
+                                    JOptionPane.showMessageDialog(null, "Researcher notified", "Success!", JOptionPane.PLAIN_MESSAGE);
                                  }
                               }
                            }//End of actionPerformed
