@@ -28,6 +28,7 @@ public class UserPermission
    public boolean login(String inEmail, String inPass) 
    {
       String tempPass = passwordSafe(inPass); //hash the inPass
+      System.out.println(tempPass);
       String[][] data = ldb.getData("SELECT * FROM faculty");  //look for the data in the table
       String test = null;
       String test2 = null;

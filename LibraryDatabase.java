@@ -16,7 +16,7 @@ class LibraryDatabase
    private String uri = "jdbc:mysql://localhost/FacResearchDB?autoReconnect=true&useSSL=false";
    private String driver = "com.mysql.jdbc.Driver";
    private String user = "root";
-   private String password = "maple";
+   private String password = "misty";
    private String sql;
    private int numField;
    
